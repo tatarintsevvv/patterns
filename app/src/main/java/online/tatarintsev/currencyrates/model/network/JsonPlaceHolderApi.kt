@@ -5,12 +5,12 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import online.tatarintsev.currencyrates.model.JsonplaceholderApiService
+import online.tatarintsev.currencyrates.model.JsonPlaceHolderApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class JsonPlaceHolderApi {
-    public fun getJsonplaceholderApiService(): JsonplaceholderApiService {
+    public fun getJsonplaceholderApiService(): JsonPlaceHolderApiService {
         var gson: Gson = GsonBuilder().create()
 
         var interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
@@ -24,7 +24,7 @@ class JsonPlaceHolderApi {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
-        return retrofit.create(JsonplaceholderApiService::class.java)
+        return retrofit.create(JsonPlaceHolderApiService::class.java)
     }
 
 }

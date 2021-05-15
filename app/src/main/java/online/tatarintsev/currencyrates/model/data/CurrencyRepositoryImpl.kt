@@ -11,14 +11,14 @@ class CurrencyRepositoryImpl: CurrencyRepository {
         remoteDataSource = CurrencyRemoteDataSource(jsonPlaceHolderApi)
     }
 
-    public override fun getUser(val id: Int): Observable<CurrencyEntity> {
+    public override fun getCurrency(val id: Int): Observable<CurrencyEntity> {
         return remoteDataSource.getCurrencies()
             .map(Function<List<CurrencyEntity>, CurrencyEntity>() {
                 @Throws(Exception::class)
                 fun apply(currencies: List<CurrencyEntity>) :  CurrencyEntity {
                     return currencies.get(id);
                 }
-            });
+            })
     }
 
 }

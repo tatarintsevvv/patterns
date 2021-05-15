@@ -1,6 +1,7 @@
 package online.tatarintsev.currencyrates.model.data
 
 import io.reactivex.Observable
+import online.tatarintsev.currencyrates.model.data.models.ApiCurrency
 import online.tatarintsev.currencyrates.model.entities.CurrencyEntity
 import online.tatarintsev.currencyrates.model.network.JsonPlaceHolderApi
 
@@ -23,9 +24,8 @@ class CurrencyRemoteDataSource(val jsonPlaceHolderApi: JsonPlaceHolderApi): Curr
                         apiCurrency.getPhone()))
                 }
 
-                    return currencies
-                }
-            );
+                    currencies
+            )
     }
 
 }
