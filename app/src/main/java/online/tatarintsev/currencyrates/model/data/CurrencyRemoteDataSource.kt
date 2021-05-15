@@ -9,12 +9,13 @@ class CurrencyRemoteDataSource(val jsonPlaceHolderApi: JsonPlaceHolderApi): Curr
 
     public override fun getUsers(): Observable<List<CurrencyEntity>> {
         return jsonPlaceHolderApi.getJsonplaceholderApiService().getCurrencies()
-            .map(Function<List<ApiCurrency>, List<CurrencyEntity>>() {
-                public override fun apply(apiCurrencies: List<ApiCurrency>) throws Exception: List<CurrencyEntity> {
-                    var currencies: List<CurrencyEntity> = ArrayList<>(apiCurrencies.size())
+            .map(apiCurrencies ->
 
-                    for (int i = 0; i < apiCurrencies.size(); i++) {
-                    var apiCurrency: ApiCurrency = apiCurrencies.get(i)
+        //  throws Exception
+        var currencies: MutableList<CurrencyEntity> = ArrayList(apiCurrencies.size)
+
+        for (i in apiCurrencies.indices) {
+            var apiCurrency: ApiCurrency = apiCurrencies[i]
                     currencies.add(CurrencyEntity(
                             i,
                         apiCurrency.getName(),
@@ -25,7 +26,7 @@ class CurrencyRemoteDataSource(val jsonPlaceHolderApi: JsonPlaceHolderApi): Curr
 
                     return currencies
                 }
-            });
+            );
     }
 
 }
