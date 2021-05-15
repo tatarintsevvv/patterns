@@ -1,45 +1,34 @@
-package online.tatarintsev.currencyrates.model.data.models
+package online.tatarintsev.currencyrates.model.data.models;
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-class ApiCurrency {
-
+public class ApiCurrency {
     @SerializedName("id")
     @Expose
-    private var id: Int
-
-
+    Integer id;
     @SerializedName("name")
     @Expose
-    private var name: String?
-
-
+    String name;
     @SerializedName("username")
     @Expose
-    var username: String
-
-
+    String username;
     @SerializedName("email")
     @Expose
-    var email: String
-
-
+    String email;
     @SerializedName("phone")
     @Expose
-    var phone: String
-
-
+    String phone;
     @SerializedName("website")
     @Expose
-    var website: String
+    String website;
 
-    public fun getId(): Int {
-        return id
+    public Integer getId() {
+        return id;
     }
 
-    public fun getName(): String {
-        return name
+    public String getName() {
+        return name;
     }
 
     public String getUsername() {
@@ -59,3 +48,4 @@ class ApiCurrency {
     }
 
 }
+
