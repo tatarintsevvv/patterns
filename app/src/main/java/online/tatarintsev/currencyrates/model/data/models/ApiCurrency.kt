@@ -34,6 +34,28 @@ class ApiCurrency {
     @Expose
     var website: String
 
+    public fun getId(): Int {
+        return id
+    }
 
+    public fun getName(): String {
+        return name
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
 
 }

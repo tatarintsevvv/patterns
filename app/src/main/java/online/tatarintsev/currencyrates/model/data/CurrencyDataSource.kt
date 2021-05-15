@@ -4,5 +4,5 @@ import io.reactivex.Observable
 import online.tatarintsev.currencyrates.model.entities.CurrencyEntity
 
 interface CurrencyDataSource {
-    fun getUsers(): Observable<List<CurrencyEntity>>
+    fun getCurrencies(): Observable<List<CurrencyEntity>>
 }
