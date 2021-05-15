@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Currency rates</string>
+    <string name="info_text">Данные недоступны</string>
+    <string name="refresh_button_text">Обновить</string>
+</resources>
