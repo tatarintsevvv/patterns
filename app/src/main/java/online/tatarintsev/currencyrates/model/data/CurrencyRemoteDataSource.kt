@@ -9,7 +9,7 @@ class CurrencyRemoteDataSource(private val jsonPlaceHolderApi: JsonPlaceHolderAp
 
 
     override fun getCurrencies(): Observable<List<CurrencyEntity?>?>? {
-        return jsonPlaceHolderApi.jsonplaceholderApiService.currencies.
+        return jsonPlaceHolderApi.jsonplaceholderApiService().getCurrencies().
                 map { apiCurrencies ->
 
    //  throws Exception
