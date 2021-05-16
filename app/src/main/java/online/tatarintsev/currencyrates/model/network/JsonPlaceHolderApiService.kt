@@ -1,4 +1,4 @@
-package online.tatarintsev.currencyrates.model
+package online.tatarintsev.currencyrates.model.network
 
 import io.reactivex.Observable
 import online.tatarintsev.currencyrates.model.data.models.ApiCurrency

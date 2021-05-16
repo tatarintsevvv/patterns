@@ -5,18 +5,20 @@ import online.tatarintsev.currencyrates.model.entities.CurrencyEntity
 import online.tatarintsev.currencyrates.model.network.JsonPlaceHolderApi
 import online.tatarintsev.currencyrates.model.repositories.CurrencyRepository
 
-class CurrencyRepositoryImpl: CurrencyRepository {
-    private lateinit var remoteDataSource: CurrencyDataSource
+class CurrencyRepositoryImpl(jsonPlaceHolderApi: JsonPlaceHolderApi): CurrencyRepository {
+    private val remoteDataSource: CurrencyDataSource = CurrencyRemoteDataSource(jsonPlaceHolderApi)
 
-    public fun CurrencyRepositoryImpl(jsonPlaceHolderApi: JsonPlaceHolderApi) {
-        remoteDataSource = CurrencyRemoteDataSource(jsonPlaceHolderApi)
+    override fun getCurrency(id: Int): Observable<CurrencyEntity> {
+        return remoteDataSource.getCurrencies().
+                map()
     }
 
-    public override fun getCurrency(id: Int): Observable<CurrencyEntity> {
-        return remoteDataSource.getCurrencies()
-                .map(
-                        it.get(id)
-                )
+    override fun getCurrency1(id: Int): Observable<CurrencyEntity> {
+        return remoteDataSource.getCurrencies()!!
+                .map(currencies -> {
+            val get = currencies.get(id)
+            get
+        })
                 /*
             .map(Function<List<CurrencyEntity>, CurrencyEntity>() {
                 @Throws(Exception::class)
@@ -29,3 +31,4 @@ class CurrencyRepositoryImpl: CurrencyRepository {
     }
 
 }
+

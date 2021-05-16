@@ -11,7 +11,7 @@ class CurrencyModelImpl(private val currencyRepository: CurrencyRepository): Cur
     }
 
     override fun getCurrencyId(): Int {
-        (0 until 10).random()
+        return (0 until 10).random()
     }
 
 }
