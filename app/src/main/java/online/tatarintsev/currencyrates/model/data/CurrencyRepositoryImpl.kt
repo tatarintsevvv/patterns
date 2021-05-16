@@ -9,7 +9,7 @@ class CurrencyRepositoryImpl(jsonPlaceHolderApi: JsonPlaceHolderApi): CurrencyRe
     private val remoteDataSource: CurrencyDataSource = CurrencyRemoteDataSource(jsonPlaceHolderApi)
 
     override fun getCurrency(id: Int): Observable<CurrencyEntity> {
-        return remoteDataSource.getCurrencies()!!
+        return remoteDataSource.getCurrencies()
                 .map { currencies ->
             val get = currencies.get(id)
             get

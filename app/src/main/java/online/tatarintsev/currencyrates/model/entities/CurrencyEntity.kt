@@ -1,3 +1,12 @@
 package online.tatarintsev.currencyrates.model.entities
 
-data class CurrencyEntity(val id: Int, val name: String, val username: String, val email: String, val phone: String)
+import online.tatarintsev.currencyrates.model.data.models.ApiRate
+
+data class CurrencyEntity(var code: Int,
+                          var messageTitle: String,
+                          var message: String,
+                          var rid: String,
+                          var downloadDate: String,
+                          var rates: MutableList<ApiRate>,
+                          var productState: Int,
+                          var ratesDate: String)

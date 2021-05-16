@@ -26,7 +26,7 @@ class CurrencyActivity: FragmentActivity() {
 
         // ViewModel не хранит данные при уничтожении процесса приложения
         viewModel!!.onCreate(savedInstanceState);
-        viewBinding = ActivityMainBinding.bind(this as View)
+//        viewBinding = ActivityMainBinding.bind(this as View)
 /*
         var binding: CurrencyActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setViewModel(viewModel)

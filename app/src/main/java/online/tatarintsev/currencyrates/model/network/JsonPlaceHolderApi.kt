@@ -17,7 +17,8 @@ class JsonPlaceHolderApi {
         var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         var retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com")
+//            .baseUrl("https://jsonplaceholder.typicode.com")
+            .baseUrl(" https://alpha.as50464.net:29870")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
