@@ -7,25 +7,26 @@ import online.tatarintsev.currencyrates.model.network.JsonPlaceHolderApi
 
 class CurrencyRemoteDataSource(val jsonPlaceHolderApi: JsonPlaceHolderApi): CurrencyDataSource {
 
-    public override fun getCurrencies(): Observable<List<CurrencyEntity>> {
-        return jsonPlaceHolderApi.getJsonplaceholderApiService().getCurrencies()
-            .map(apiCurrencies ->
+    override fun getCurrencies(): Observable<List<CurrencyEntity>> {
+        return jsonPlaceHolderApi.getJsonplaceholderApiService().getCurrencies().
+        map { apiCurrencies ->
 
-        //  throws Exception
-        var currencies: MutableList<CurrencyEntity> = ArrayList(apiCurrencies.size)
+            //  throws Exception
+            var currencies: MutableList<CurrencyEntity> = ArrayList(apiCurrencies.size)
 
-        for (i in apiCurrencies.indices) {
-            var apiCurrency: ApiCurrency = apiCurrencies[i]
-                    currencies.add(CurrencyEntity(
-                            i,
+            for (i in apiCurrencies.indices) {
+                var apiCurrency: ApiCurrency = apiCurrencies[i]
+                currencies.add(
+                    CurrencyEntity(
+                        i,
                         apiCurrency.getName(),
                         apiCurrency.getUsername(),
                         apiCurrency.getEmail(),
-                        apiCurrency.getPhone()))
-                }
-
-                    currencies
-            )
+                        apiCurrency.getPhone()
+                    )
+                )
+            }
+            currencies
+        }
     }
-
 }
