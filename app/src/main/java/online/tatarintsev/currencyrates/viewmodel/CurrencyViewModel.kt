@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.Observer
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
+import online.tatarintsev.currencyrates.model.data.models.ApiRate
 import online.tatarintsev.currencyrates.model.entities.CurrencyEntity
 import online.tatarintsev.currencyrates.model.interactors.CurrencyModel
 
 public class CurrencyViewModel(private val subscribeOn: Scheduler, private val observeOn: Scheduler, private val model: CurrencyModel): ViewModel() {
-    val SAVE_CURRENCY_ID: String = "user_id"
+    val SAVE_CURRENCY_DATA: String = "currency_data"
+    val SAVE_CURRENCY_CHOSEN: String = "currency_chosen"
 
     private var disposable: Disposable? = null
 
@@ -20,22 +22,24 @@ public class CurrencyViewModel(private val subscribeOn: Scheduler, private val o
     private var errorLiveData: MutableLiveData<String> = MutableLiveData<String>()
     private var resultLiveData: MutableLiveData<String> = MutableLiveData<String>()
 
-    // идентификатор пользователя на случай пересоздания процесса
+    // идентификатор валюты на случай пересоздания процесса
     // сохраняется с помощью стандартного механизма Bundle - savedInstanceState
-    private var usedId: Int = -1
-
+    private var rateChosen: String? = null
+    private var currencyAll: CurrencyEntity? = null
 
     /**
      * Используется для восстановления идентификатора из savedInstanceState
      */
     fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            usedId = savedInstanceState.getInt(SAVE_CURRENCY_ID, -1);
+            currencyAll = savedInstanceState.getParcelable(SAVE_CURRENCY_DATA)
+            rateChosen = savedInstanceState.getString(SAVE_CURRENCY_CHOSEN)
         }
     }
 
     fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(SAVE_CURRENCY_ID, usedId);
+        outState.putParcelable(SAVE_CURRENCY_DATA, currencyLiveData.getValue())
+        outState.putString(SAVE_CURRENCY_CHOSEN, rateChosen)
     }
 
     /**
@@ -45,7 +49,7 @@ public class CurrencyViewModel(private val subscribeOn: Scheduler, private val o
     fun onStart() {
         if (currencyLiveData.getValue() == null) {
             // получаем данные из модели аналогично MVP
-            model.getCurrency(getCurrencyId())
+            model.getCurrency()
                     .subscribeOn(subscribeOn)
                     .observeOn(observeOn)
                     .subscribe(CurrencyObserver());
@@ -55,11 +59,11 @@ public class CurrencyViewModel(private val subscribeOn: Scheduler, private val o
     /**
      * генерация идентификатора пользователя для наглядной демонстрации сохрания данных
      */
-    private fun getCurrencyId(): Int {
-        if (usedId == -1) {
-            usedId = model.getCurrencyId()
+    private fun getCurrencyName(): String? {
+        if (currencyAll != null) {
+            rateChosen = model.getCurrencyName()
         }
-        return usedId
+        return rateChosen
     }
 
     /**
@@ -81,16 +85,16 @@ public class CurrencyViewModel(private val subscribeOn: Scheduler, private val o
         resultLiveData.setValue("Result")
     }
 
-    fun getUser(): LiveData<CurrencyEntity> {
+    fun getRates(): MutableLiveData<CurrencyEntity>  {
         return currencyLiveData
     }
 
     fun getError(): LiveData<String> {
-        return errorLiveData;
+        return errorLiveData
     }
 
     fun getResult(): LiveData<String> {
-        return resultLiveData;
+        return resultLiveData
     }
 
     private inner class CurrencyObserver: Observer<CurrencyEntity> {

@@ -6,12 +6,13 @@ import online.tatarintsev.currencyrates.model.repositories.CurrencyRepository
 
 class CurrencyModelImpl(private val currencyRepository: CurrencyRepository): CurrencyModel {
 
-    override fun getCurrency(id: Int): Observable<CurrencyEntity> {
-        return currencyRepository.getCurrency(id);
+    override fun getCurrency(): Observable<CurrencyEntity> {
+        return currencyRepository.getCurrency();
     }
 
-    override fun getCurrencyId(): Int {
-        return (0 until 10).random()
+    override fun getCurrencyName(): String? {
+        TODO("Not yet implemented")
     }
+
 
 }

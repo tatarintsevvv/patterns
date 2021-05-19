@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
 }
+
 
 android {
     compileSdkVersion 30
@@ -32,7 +34,6 @@ android {
     }
     buildFeatures {
         dataBinding true
-        // for view binding:
         viewBinding true
     }
 }

@@ -3,6 +3,7 @@ package online.tatarintsev.currencyrates.model.data.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApiCurrency {
@@ -24,7 +25,7 @@ public class ApiCurrency {
     String downloadDate;
     @SerializedName("rates")
     @Expose
-    List<ApiRate> rates;
+    ArrayList<ApiRate> rates;
     @SerializedName("productState")
     @Expose
     int productState;
@@ -52,7 +53,7 @@ public class ApiCurrency {
         return downloadDate;
     }
 
-    public List<ApiRate> getRates() {
+    public ArrayList<ApiRate> getRates() {
         return rates;
     }
 
