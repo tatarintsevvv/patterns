@@ -10,6 +10,7 @@ import io.reactivex.disposables.Disposable
 import online.tatarintsev.currencyrates.model.data.models.ApiRate
 import online.tatarintsev.currencyrates.model.entities.CurrencyEntity
 import online.tatarintsev.currencyrates.model.interactors.CurrencyModel
+import online.tatarintsev.currencyrates.view.ui.RecyclerViewAdapter
 
 public class CurrencyViewModel(private val subscribeOn: Scheduler, private val observeOn: Scheduler, private val model: CurrencyModel): ViewModel() {
     val SAVE_CURRENCY_DATA: String = "currency_data"
@@ -57,6 +58,16 @@ public class CurrencyViewModel(private val subscribeOn: Scheduler, private val o
     }
 
     /**
+     * перегружам данные
+     */
+    fun reload() {
+        model.getCurrency()
+                .subscribeOn(subscribeOn)
+                .observeOn(observeOn)
+                .subscribe(CurrencyObserver());
+    }
+
+    /**
      * генерация идентификатора пользователя для наглядной демонстрации сохрания данных
      */
     private fun getCurrencyName(): String? {
@@ -85,8 +96,12 @@ public class CurrencyViewModel(private val subscribeOn: Scheduler, private val o
         resultLiveData.setValue("Result")
     }
 
-    fun getRates(): MutableLiveData<CurrencyEntity>  {
+    fun getCurrencies(): MutableLiveData<CurrencyEntity>  {
         return currencyLiveData
+    }
+
+    fun getRates(): ArrayList<ApiRate>?  {
+        return currencyLiveData?.value?.rates
     }
 
     fun getError(): LiveData<String> {
@@ -110,7 +125,7 @@ public class CurrencyViewModel(private val subscribeOn: Scheduler, private val o
 
         override fun onError(e: Throwable) {
             // ошибку тоже передаем в обозреваемое поле
-            errorLiveData.setValue("Error!")
+            errorLiveData.setValue("Error!:" + e.message)
         }
 
         override fun onComplete() {

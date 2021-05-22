@@ -3,4 +3,6 @@
     <string name="info_text">Данные недоступны</string>
     <string name="refresh_button_text">Обновить</string>
     <string name="currency_path"><![CDATA[/moby-pre-44/core?r=BEYkZbmV&d=563B4852-6D4B-49D6-A86E-B273DD520FD2&t=ExchangeRates&v=44]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
