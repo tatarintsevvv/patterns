@@ -13,7 +13,7 @@ data class RateEntity (
     var currMnemTo: String,
     var basic: String,
     var buy: String,
-    var sell: String,
+    var sale: String,
     var deltaBuy: String,
     var deltaSell: String
 ) : Parcelable

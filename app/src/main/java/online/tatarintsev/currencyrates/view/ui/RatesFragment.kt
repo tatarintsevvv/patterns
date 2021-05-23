@@ -80,7 +80,7 @@ class RatesFragment : Fragment() {
         //подписываем адаптер на изменения ошибки
         viewModel?.getError()?.observe(this.viewLifecycleOwner, Observer {
             it?.let {
-                Toast.makeText(this.context, it, Toast.LENGTH_LONG)
+                Toast.makeText(this.context, it, Toast.LENGTH_LONG).show()
             }
         })
 
@@ -130,7 +130,7 @@ class RecyclerViewAdapter(var items : ArrayList<ApiRate>?) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder?.rate_name.setText(items?.get(position)?.name)
         holder?.buy_value.setText(items?.get(position)?.buy)
-        holder?.sell_value.setText(items?.get(position)?.sell)
+        holder?.sale_value.setText(items?.get(position)?.sale)
     }
 
     fun refreshRates(currency: CurrencyEntity) {
@@ -143,5 +143,5 @@ class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each country to
     val rate_name: TextView = view.findViewById(R.id.rate_name) as TextView
     val buy_value: TextView = view.findViewById(R.id.buy_value) as TextView
-    val sell_value: TextView = view.findViewById(R.id.sell_value) as TextView
+    val sale_value: TextView = view.findViewById(R.id.sale_value) as TextView
 }

@@ -14,7 +14,7 @@ data class ApiRate(
     @SerializedName("currMnemTo") val currMnemTo: String,
     @SerializedName("basic") val basic: String,
     @SerializedName("buy") val buy: String,
-    @SerializedName("sell") val sell: String,
+    @SerializedName("sale") val sale: String,
     @SerializedName("deltaBuy") val deltaBuy: String,
     @SerializedName("deltaSell") val deltaSell: String
 ) : Parcelable
