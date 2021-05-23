@@ -1,8 +1,9 @@
-package online.tatarintsev.currencyrates.model.repositories
+package online.tatarintsev.currencyrates.model.interactors
 
 import io.reactivex.Observable
 import online.tatarintsev.currencyrates.model.entities.CurrencyEntity
 
-interface CurrencyRepository {
+interface CurrencyModel {
     fun getCurrency(): Observable<CurrencyEntity>
+    fun getCurrencyName(): String?
 }

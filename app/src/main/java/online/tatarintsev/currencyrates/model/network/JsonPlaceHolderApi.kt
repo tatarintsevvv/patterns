@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class JsonPlaceHolderApi {
-    public fun jsonplaceholderApiService(): JsonplaceholderApiService {
+    public fun getJsonplaceholderApiService(): JsonPlaceHolderApiService {
         var gson: Gson = GsonBuilder().create()
 
         var interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
@@ -17,12 +17,13 @@ class JsonPlaceHolderApi {
         var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         var retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com")
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
+            .baseUrl(" https://alpha.as50464.net:29870")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
 
-        return retrofit.create(JsonplaceholderApiService::class.java)
+        return retrofit.create(JsonPlaceHolderApiService::class.java)
     }
+
 }

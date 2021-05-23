@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<data>
+    <variable
+        name="ce"
+        type="online.tatarintsev.currencyrates.viewmodel.CurrencyViewModel" />
+</data>
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.ui.RatesFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/date_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="8sp"
+            android:layout_marginStart="8sp"
+            android:text="@{ce.currencies.ratesDate}"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/refresh_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/refresh_button_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> ce.reload()}"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/refresh_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rate_name_label"
+                android:layout_width="140sp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="8sp"
+                android:text="Название"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/buy_value_label"
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rate_name_label"
+                android:layout_margin="8sp"
+                android:text="Buy"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/sale_value_label"
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/buy_value_label"
+                android:layout_margin="8sp"
+                android:text="Sale"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rates_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toBottomOf="@id/rate_name_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:paddingVertical="40sp"
+                tools:listitem="@layout/list_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

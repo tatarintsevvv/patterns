@@ -8,11 +8,13 @@ import online.tatarintsev.currencyrates.model.repositories.CurrencyRepository
 class CurrencyRepositoryImpl(jsonPlaceHolderApi: JsonPlaceHolderApi): CurrencyRepository {
     private val remoteDataSource: CurrencyDataSource = CurrencyRemoteDataSource(jsonPlaceHolderApi)
 
-    override fun getCurrency(id: Int) : Observable<CurrencyEntity> {
-        return remoteDataSource.getCurrencies()!!.
-        map { currencies ->
-            val get = currencies.get(id)
+    override fun getCurrency(): Observable<CurrencyEntity> {
+        return remoteDataSource.getCurrencies()
+                .map { currency ->
+            val get = currency
             get
         }
     }
+
 }
+

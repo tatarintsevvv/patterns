@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="ce"
+            type="online.tatarintsev.currencyrates.viewmodel.CurrencyViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/rate_name"
+            android:layout_width="140sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="8sp"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/buy_value"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/rate_name"
+            android:layout_margin="8sp"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sale_value"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/buy_value"
+            android:layout_margin="8sp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
