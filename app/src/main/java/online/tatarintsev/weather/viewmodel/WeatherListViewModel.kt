@@ -98,10 +98,6 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
         return weatherLiveData
     }
 
-    fun getRates(): ArrayList<ApiRate>?  {
-        return weatherLiveData?.value?.rates
-    }
-
     fun getError(): LiveData<String> {
         return errorLiveData
     }

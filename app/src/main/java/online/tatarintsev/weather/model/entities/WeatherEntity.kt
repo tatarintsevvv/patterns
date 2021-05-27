@@ -1,16 +1,17 @@
 package online.tatarintsev.weather.model.entities
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import online.tatarintsev.weather.model.data.models.ApiFact
+import online.tatarintsev.weather.model.data.models.ApiForecast
+import online.tatarintsev.weather.model.data.models.ApiInfo
 
 @Parcelize
 data class WeatherEntity(
         var now: Long,
         var now_dt: String,
-        var message: String,
-        var rid: String,
-        var downloadDate: String,
-        var rates: ArrayList<ApiRate>,
-        var productState: Int,
-        var ratesDate: String
+        val info: ApiInfo,
+        val fact: ApiFact,
+        val forecast: ApiForecast
         ) : Parcelable
