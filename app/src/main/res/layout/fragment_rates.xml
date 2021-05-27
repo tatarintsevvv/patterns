@@ -6,7 +6,7 @@
 <data>
     <variable
         name="ce"
-        type="online.tatarintsev.currencyrates.viewmodel.CurrencyViewModel" />
+        type="online.tatarintsev.weather.viewmodel.WeatherListViewModel" />
 </data>
 <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
