@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import online.tatarintsev.weather.R
 import online.tatarintsev.weather.databinding.FragmentRatesBinding
-import online.tatarintsev.weather.model.data.models.ApiRate
 import online.tatarintsev.weather.model.entities.WeatherEntity
 import online.tatarintsev.weather.view.WeatherViewModelFactory
 import online.tatarintsev.weather.viewmodel.WeatherListViewModel

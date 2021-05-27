@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.Observer
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
-import online.tatarintsev.weather.model.data.models.ApiRate
 import online.tatarintsev.weather.model.entities.WeatherEntity
 import online.tatarintsev.weather.model.interactors.WeatherModel
 

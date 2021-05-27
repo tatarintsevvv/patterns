@@ -2,7 +2,6 @@ package online.tatarintsev.weather.model.entities
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import online.tatarintsev.weather.model.data.models.ApiRate
 
 @Parcelize
 data class WeatherEntity(
