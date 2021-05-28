@@ -12,7 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.ui.RatesFragment">
+    tools:context=".view.ui.WeatherListFragment">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/date_currency"
             android:layout_width="wrap_content"

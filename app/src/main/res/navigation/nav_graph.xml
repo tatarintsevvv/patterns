@@ -3,11 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/ratesFragment">
+    app:startDestination="@id/weatherListFragment">
+
 
     <fragment
-        android:id="@+id/ratesFragment"
-        android:name="online.tatarintsev.weather.view.ui.RatesFragment"
-        android:label="fragment_rates"
-        tools:layout="@layout/weather_town_fragment" />
+        android:id="@+id/weatherListFragment"
+        android:name="online.tatarintsev.weather.view.ui.WeatherListFragment"
+        android:label="WeatherListFragment" />
+    <fragment
+        android:id="@+id/weatherTownFragment2"
+        android:name="online.tatarintsev.weather.view.ui.WeatherTownFragment"
+        android:label="WeatherTownFragment" />
 </navigation>

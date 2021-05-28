@@ -14,6 +14,7 @@
     tools:context=".view.ui.WeatherTownFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_towns"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

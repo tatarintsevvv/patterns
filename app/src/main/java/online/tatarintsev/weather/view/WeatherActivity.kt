@@ -14,10 +14,10 @@ class WeatherActivity: AppCompatActivity() {
 
     protected override fun onCreate(savedInstanceState: Bundle?) {
         // фабрика для создания ViewModel с конструктором с параметрами
-        var weatherViewModelFactory: WeatherViewModelFactory = WeatherViewModelFactory()
+        var townsListViewModelFactory: TownsListViewModelFactory = TownsListViewModelFactory()
         // механизм получения ViewModel
         // можно получить для активити или фрагмента
-        listViewModel = ViewModelProvider(this, weatherViewModelFactory).get(WeatherListViewModel::class.java)
+        listViewModel = ViewModelProvider(this, townsListViewModelFactory).get(WeatherListViewModel::class.java)
 
         super.onCreate(savedInstanceState)
 

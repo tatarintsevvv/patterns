@@ -5,25 +5,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.Observer
+import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import online.tatarintsev.weather.model.entities.TownEntity
 import online.tatarintsev.weather.model.entities.WeatherEntity
+import online.tatarintsev.weather.model.interactors.TownWeatherModel
 
-class WeatherTownViewModel : ViewModel() {
-    val SAVE_WEATHER_DATA: String = "weather_towns_data"
-    val SAVE_WEATHER_CHOSEN: String = "weather_towns_chosen"
+class WeatherTownViewModel(private val subscribeOn: Scheduler, private val observeOn: Scheduler, private val modelTown: TownWeatherModel): ViewModel() {
+    val SAVE_WEATHER_DATA: String = "weather_town_data"
+    val SAVE_WEATHER_CHOSEN: String = "weather_town_chosen"
 
     private var disposable: Disposable? = null
 
     // поля данных, на которые подписывается View
-    private var townsLiveData: MutableLiveData<ArrayList<TownEntity>> = MutableLiveData<WeatherEntity>()
+    private var weatherLiveData: MutableLiveData<WeatherEntity> = MutableLiveData<WeatherEntity>()
     private var errorLiveData: MutableLiveData<String> = MutableLiveData<String>()
     private var resultLiveData: MutableLiveData<String> = MutableLiveData<String>()
 
     // идентификатор валюты на случай пересоздания процесса
     // сохраняется с помощью стандартного механизма Bundle - savedInstanceState
     private var townChosen: String? = null
-    private var towns: ArrayList<TownEntity> = ArrayList()
 
     private val ourTowns: ArrayList<TownEntity> = arrayListOf(
         TownEntity("Москва", 49.0, 49.0),
@@ -47,6 +48,7 @@ class WeatherTownViewModel : ViewModel() {
         TownEntity("London", 49.0, 49.0),
     )
 
+    private var towns: ArrayList<TownEntity> = ourTowns
 
     /**
      * Используется для восстановления идентификатора из savedInstanceState
@@ -66,9 +68,9 @@ class WeatherTownViewModel : ViewModel() {
      * ViewModel сохранится при пересоздании активити и данные не нужно будет запрашивать вновь
      */
     fun onStart() {
-        if (townsLiveData.getValue() == null) {
+        if (weatherLiveData.getValue() == null) {
             // получаем данные из модели аналогично MVP
-            model.getCurrency()
+            modelTown.getWeather()
                 .subscribeOn(subscribeOn)
                 .observeOn(observeOn)
                 .subscribe(CurrencyObserver());
@@ -79,7 +81,7 @@ class WeatherTownViewModel : ViewModel() {
      * перегружам данные
      */
     fun reload() {
-        model.getCurrency()
+        modelTown.getWeather()
             .subscribeOn(subscribeOn)
             .observeOn(observeOn)
             .subscribe(CurrencyObserver());
@@ -90,7 +92,7 @@ class WeatherTownViewModel : ViewModel() {
      */
     private fun getTownName(): String? {
         if (towns != null) {
-            townChosen = model.getCurrencyName()
+            townChosen = modelTown.getTownName()
         }
         return townChosen
     }
@@ -114,8 +116,8 @@ class WeatherTownViewModel : ViewModel() {
         resultLiveData.setValue("Result")
     }
 
-    fun getTowns(): MutableLiveData<ArrayList<TownEntity>> {
-        return townsLiveData
+    fun getTowns(): MutableLiveData<WeatherEntity> {
+        return weatherLiveData
     }
 
     fun getError(): LiveData<String> {
@@ -134,7 +136,7 @@ class WeatherTownViewModel : ViewModel() {
 
         override fun onNext(weather: WeatherEntity) {
             // полученные данные передаем в обозреваемое поле, которое уведомит подписчиков
-            townsLiveData.setValue(weather)
+            weatherLiveData.setValue(weather)
         }
 
         override fun onError(e: Throwable) {
