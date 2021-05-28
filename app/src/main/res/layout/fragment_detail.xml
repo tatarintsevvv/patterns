@@ -5,23 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools">
 <data>
     <variable
-        name="ce"
-        type="online.tatarintsev.weather.viewmodel.WeatherListViewModel" />
+        name="tv"
+        type="online.tatarintsev.weather.viewmodel.WeatherTownViewModel" />
 </data>
 <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.ui.WeatherListFragment">
+    tools:context=".view.ui.WeatherTownFragment">
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/date_currency"
+            android:id="@+id/date_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="8sp"
             android:layout_marginStart="8sp"
-            android:text="@{ce.currencies.ratesDate}"
+            android:text="@{tv.weather.now_dt}"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/refresh_button"
@@ -30,7 +30,7 @@
             android:text="@string/refresh_button_text"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> ce.reload()}"
+            android:onClick="@{() -> tv.reload()}"
             />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

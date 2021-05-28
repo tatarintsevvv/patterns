@@ -6,6 +6,6 @@ import online.tatarintsev.weather.model.repositories.TownsListRepository
 
 class TownsListModelImpl(private val townsListRepository: TownsListRepository): TownsListModel {
     override fun getTowns(): Observable<ArrayList<TownEntity>> {
-        TODO("Not yet implemented")
+        return townsListRepository.getTowns()
     }
 }

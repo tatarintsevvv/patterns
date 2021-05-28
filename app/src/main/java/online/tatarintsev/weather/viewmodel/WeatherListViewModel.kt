@@ -48,7 +48,6 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
         TownEntity("London", 49.0, 49.0),
     )
 
-    private var towns: ArrayList<TownEntity> = ourTowns
 
     /**
      * Используется для восстановления идентификатора из savedInstanceState
@@ -57,6 +56,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
         if (savedInstanceState != null) {
             townChosen = savedInstanceState.getString(SAVE_WEATHER_CHOSEN)
         }
+        townsLiveData.setValue(ourTowns)
     }
 
     fun onSaveInstanceState(outState: Bundle) {

@@ -26,30 +26,6 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
     // сохраняется с помощью стандартного механизма Bundle - savedInstanceState
     private var townChosen: String? = null
 
-    private val ourTowns: ArrayList<TownEntity> = arrayListOf(
-        TownEntity("Москва", 49.0, 49.0),
-        TownEntity("Санкт-Петербург", 49.0, 49.0),
-        TownEntity("Екатеринбург", 49.0, 49.0),
-        TownEntity("Казань", 49.0, 49.0),
-        TownEntity("Новосибирск", 49.0, 49.0),
-        TownEntity("Красноярск", 49.0, 49.0),
-        TownEntity("Нижний Новгород", 49.0, 49.0),
-        TownEntity("Сочи", 49.0, 49.0),
-    )
-
-    private val notOurTowns: ArrayList<TownEntity> = arrayListOf(
-        TownEntity("New-York", 49.0, 49.0),
-        TownEntity("Los-Angelos", 49.0, 49.0),
-        TownEntity("Pekin", 49.0, 49.0),
-        TownEntity("Berlin", 49.0, 49.0),
-        TownEntity("Dehli", 49.0, 49.0),
-        TownEntity("Paris", 49.0, 49.0),
-        TownEntity("Rio-de-Janeiro", 49.0, 49.0),
-        TownEntity("London", 49.0, 49.0),
-    )
-
-    private var towns: ArrayList<TownEntity> = ourTowns
-
     /**
      * Используется для восстановления идентификатора из savedInstanceState
      */
@@ -91,7 +67,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
      * генерация идентификатора пользователя для наглядной демонстрации сохрания данных
      */
     private fun getTownName(): String? {
-        if (towns != null) {
+        if (modelTown != null) {
             townChosen = modelTown.getTownName()
         }
         return townChosen
@@ -116,7 +92,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
         resultLiveData.setValue("Result")
     }
 
-    fun getTowns(): MutableLiveData<WeatherEntity> {
+    fun getWeather(): MutableLiveData<WeatherEntity> {
         return weatherLiveData
     }
 

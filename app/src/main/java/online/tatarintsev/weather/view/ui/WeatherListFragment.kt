@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import online.tatarintsev.weather.R
-import online.tatarintsev.weather.databinding.WeatherTownFragmentBinding
+import online.tatarintsev.weather.databinding.TownsListFragmentBinding
 import online.tatarintsev.weather.model.entities.TownEntity
 import online.tatarintsev.weather.view.TownsListViewModelFactory
 import online.tatarintsev.weather.viewmodel.WeatherListViewModel
@@ -34,7 +34,7 @@ class WeatherListFragment : Fragment() {
     //private var param1: String? = null
     //private var param2: String? = null
     var listViewModel: WeatherListViewModel? = null
-    private var viewBinding: WeatherTownFragmentBinding? = null
+    private var viewBinding: TownsListFragmentBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         var townsListViewModelFactory: TownsListViewModelFactory = TownsListViewModelFactory()
@@ -56,7 +56,7 @@ class WeatherListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var viewBinding: WeatherTownFragmentBinding =  DataBindingUtil.inflate(inflater, R.layout.weather_town_fragment, container, false)
+        var viewBinding: TownsListFragmentBinding =  DataBindingUtil.inflate(inflater, R.layout.towns_list_fragment, container, false)
         viewBinding.ce = listViewModel
         viewBinding.setLifecycleOwner(this)
 
