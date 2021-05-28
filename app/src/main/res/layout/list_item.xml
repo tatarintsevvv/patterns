@@ -8,34 +8,12 @@
             name="ce"
             type="online.tatarintsev.weather.viewmodel.WeatherListViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/rate_name"
-            android:layout_width="140sp"
+            android:id="@+id/town_name"
+            android:layout_width="240sp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="8sp"
             />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/buy_value"
-            android:layout_width="80sp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/rate_name"
-            android:layout_margin="8sp"
-            />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/sale_value"
-            android:layout_width="80sp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/buy_value"
-            android:layout_margin="8sp"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

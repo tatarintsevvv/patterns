@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Currency rates"
+rootProject.name = "Погодный информатор"

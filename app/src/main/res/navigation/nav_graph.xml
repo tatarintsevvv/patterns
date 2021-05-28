@@ -9,5 +9,5 @@
         android:id="@+id/ratesFragment"
         android:name="online.tatarintsev.weather.view.ui.RatesFragment"
         android:label="fragment_rates"
-        tools:layout="@layout/fragment_rates" />
+        tools:layout="@layout/weather_town_fragment" />
 </navigation>
