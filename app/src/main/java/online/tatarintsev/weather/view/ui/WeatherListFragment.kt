@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -111,6 +112,7 @@ class WeatherListFragment : Fragment() {
                      */
                 }
     }
+
 }
 class RecyclerViewAdapter(var items : ArrayList<TownEntity>?) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -126,7 +128,10 @@ class RecyclerViewAdapter(var items : ArrayList<TownEntity>?) : RecyclerView.Ada
 
     // Binds each country in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.rate_name.setText(items?.get(position)?.name)
+        holder?.town_name.setText(items?.get(position)?.name)
+        holder?.town_name.setOnClickListener { view ->
+            view?.findNavController()?.navigate(R.id.action_weatherListFragment_to_weatherTownFragment2)
+        }
     }
 
     fun refreshTowns(towns: ArrayList<TownEntity>) {
@@ -137,5 +142,5 @@ class RecyclerViewAdapter(var items : ArrayList<TownEntity>?) : RecyclerView.Ada
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each country to
-    val rate_name: TextView = view.findViewById(R.id.town_name) as TextView
+    val town_name: TextView = view.findViewById(R.id.town_name) as TextView
 }

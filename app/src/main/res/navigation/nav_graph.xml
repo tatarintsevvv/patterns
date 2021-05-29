@@ -9,7 +9,11 @@
     <fragment
         android:id="@+id/weatherListFragment"
         android:name="online.tatarintsev.weather.view.ui.WeatherListFragment"
-        android:label="WeatherListFragment" />
+        android:label="WeatherListFragment" >
+        <action
+            android:id="@+id/action_weatherListFragment_to_weatherTownFragment2"
+            app:destination="@id/weatherTownFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/weatherTownFragment2"
         android:name="online.tatarintsev.weather.view.ui.WeatherTownFragment"
