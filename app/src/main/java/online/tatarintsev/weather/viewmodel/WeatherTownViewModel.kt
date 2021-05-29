@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.Observer
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
-import online.tatarintsev.weather.model.entities.TownEntity
 import online.tatarintsev.weather.model.entities.WeatherEntity
 import online.tatarintsev.weather.model.interactors.TownWeatherModel
 
@@ -49,7 +48,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
             modelTown.getWeather()
                 .subscribeOn(subscribeOn)
                 .observeOn(observeOn)
-                .subscribe(CurrencyObserver());
+                .subscribe(TownWeatherObserver());
         }
     }
 
@@ -60,7 +59,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
         modelTown.getWeather()
             .subscribeOn(subscribeOn)
             .observeOn(observeOn)
-            .subscribe(CurrencyObserver());
+            .subscribe(TownWeatherObserver());
     }
 
     /**
@@ -104,7 +103,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
         return resultLiveData
     }
 
-    private inner class CurrencyObserver: Observer<WeatherEntity> {
+    private inner class TownWeatherObserver: Observer<WeatherEntity> {
 
         override fun onSubscribe(d: Disposable) {
             disposable = d
