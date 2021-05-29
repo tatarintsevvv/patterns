@@ -13,7 +13,10 @@ import online.tatarintsev.weather.model.interactors.TownsListModel
 
 public class WeatherListViewModel(private val subscribeOn: Scheduler, private val observeOn: Scheduler, private val modelTown: TownsListModel): ViewModel() {
     val SAVE_WEATHER_DATA: String = "weather_data"
-    val SAVE_WEATHER_CHOSEN: String = "weather_chosen"
+    val SAVE_LIST_CHOSEN: String = "list_chosen"
+
+    val RUSSIAN_LIST_CHOSEN: Int = 0
+    val FOREIGN_LIST_CHOSEN: Int = 1
 
     private var disposable: Disposable? = null
 
@@ -24,7 +27,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
 
     // идентификатор выбранного города на случай пересоздания процесса
     // сохраняется с помощью стандартного механизма Bundle - savedInstanceState
-    private var townChosen: String? = null
+    private var listChosen: Int = RUSSIAN_LIST_CHOSEN
 
     private val ourTowns: ArrayList<TownEntity> = arrayListOf(
         TownEntity("Москва", 49.0, 49.0),
@@ -54,16 +57,22 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
      */
     fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            townChosen = savedInstanceState.getString(SAVE_WEATHER_CHOSEN)
+            listChosen = savedInstanceState.getInt(SAVE_LIST_CHOSEN, RUSSIAN_LIST_CHOSEN)
         }
-        townsLiveData.setValue(ourTowns)
+        if(listChosen == RUSSIAN_LIST_CHOSEN) {
+            townsLiveData.setValue(ourTowns)
+        } else {
+            townsLiveData.setValue(notOurTowns)
+        }
     }
 
     fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(SAVE_WEATHER_CHOSEN, townChosen)
+        outState.putInt(SAVE_LIST_CHOSEN, listChosen)
     }
 
     /**
+     * Оставлено на всякий случай, если пожелаем брать список городов из сети, но пока
+     * список городов всегда не null
      * Запрашиваем данные, только если они не были получены ранее
      * ViewModel сохранится при пересоздании активити и данные не нужно будет запрашивать вновь
      */
@@ -78,6 +87,20 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
     }
 
     /**
+     * переключаем список
+     */
+    fun revertList() {
+        if(listChosen == RUSSIAN_LIST_CHOSEN) {
+            listChosen = FOREIGN_LIST_CHOSEN;
+            townsLiveData.setValue(notOurTowns)
+        } else {
+            listChosen = RUSSIAN_LIST_CHOSEN;
+            townsLiveData.setValue(ourTowns)
+        }
+    }
+
+    /**
+     * Оставлено на всякий случай, если пожелаем брать список городов из сети, но пока не используется
      * перегружам данные
      */
     fun reload() {
@@ -86,6 +109,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
                 .observeOn(observeOn)
                 .subscribe(ListTownObserver());
     }
+
 
 
     /**
