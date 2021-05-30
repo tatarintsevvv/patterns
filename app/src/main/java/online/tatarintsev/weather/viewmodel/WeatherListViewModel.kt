@@ -29,25 +29,25 @@ class WeatherListViewModel(private val subscribeOn: Scheduler, private val obser
     private var listChosen: Int = RUSSIAN_LIST_CHOSEN
 
     private val ourTowns: ArrayList<TownEntity> = arrayListOf(
-        TownEntity("Москва", 49.0f, 49.0f),
-        TownEntity("Санкт-Петербург", 49.0f, 49.0f),
-        TownEntity("Екатеринбург", 49.0f, 49.0f),
-        TownEntity("Казань", 49.0f, 49.0f),
-        TownEntity("Новосибирск", 49.0f, 49.0f),
-        TownEntity("Красноярск", 49.0f, 49.0f),
-        TownEntity("Нижний Новгород", 49.0f, 49.0f),
-        TownEntity("Сочи", 49.0f, 49.0f)
+        TownEntity("Москва", 55.7522f, 37.6156f),
+        TownEntity("Санкт-Петербург", 59.93428f, 30.3351f),
+        TownEntity("Екатеринбург", 56.8575f, 60.6125f),
+        TownEntity("Казань", 55.83043f, 49.06608f),
+        TownEntity("Новосибирск", 55.00835f, 82.93573f),
+        TownEntity("Красноярск", 56.01258f, 92.89325f),
+        TownEntity("Нижний Новгород", 56.2965f, 43.93606f),
+        TownEntity("Сочи", 43.60281f, 39.73415f)
     )
 
     private val notOurTowns: ArrayList<TownEntity> = arrayListOf(
-        TownEntity("New-York", 49.0f, 49.0f),
-        TownEntity("Los-Angelos", 49.0f, 49.0f),
-        TownEntity("Pekin", 49.0f, 49.0f),
-        TownEntity("Berlin", 49.0f, 49.0f),
-        TownEntity("Dehli", 49.0f, 49.0f),
-        TownEntity("Paris", 49.0f, 49.0f),
-        TownEntity("Rio-de-Janeiro", 49.0f, 49.0f),
-        TownEntity("London", 49.0f, 49.0f)
+        TownEntity("New-York", 40.7143f, -74.006f),
+        TownEntity("Los-Angelos", 34.0396f, -118.2661f),
+        TownEntity("Pekin", 39.9289f, 116.3883f),
+        TownEntity("Berlin", 55.755786f, 37.6176f),
+        TownEntity("Dehli", 28.65915f, 77.23149f),
+        TownEntity("Paris", 48.85341f, 2.3488f),
+        TownEntity("Rio-de-Janeiro", -22.9064f, -43.2075f),
+        TownEntity("London", 51.50853f, -0.12574f)
     )
 
 
