@@ -8,14 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import online.tatarintsev.weather.R
 import online.tatarintsev.weather.databinding.FragmentDetailBinding
-import online.tatarintsev.weather.databinding.TownsListFragmentBinding
 import online.tatarintsev.weather.model.entities.TownEntity
 import online.tatarintsev.weather.view.TownViewModelFactory
-import online.tatarintsev.weather.view.TownsListViewModelFactory
-import online.tatarintsev.weather.viewmodel.WeatherListViewModel
 import online.tatarintsev.weather.viewmodel.WeatherTownViewModel
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,10 +23,9 @@ class WeatherTownFragment : Fragment() {
     private var townEntity: TownEntity? = null
 
     private var viewModel: WeatherTownViewModel? = null
-    private var viewBinding: FragmentDetailBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var townViewModelFactory: TownViewModelFactory = TownViewModelFactory()
+        val townViewModelFactory = TownViewModelFactory()
         viewModel = ViewModelProvider(this, townViewModelFactory).get(WeatherTownViewModel::class.java)
         super.onCreate(savedInstanceState)
 
@@ -48,13 +43,13 @@ class WeatherTownFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        var viewBinding: FragmentDetailBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
+    ): View {
+        val viewBinding: FragmentDetailBinding =  DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
         viewBinding.tv = viewModel
-        viewBinding.setLifecycleOwner(this)
+        viewBinding.lifecycleOwner = this
 
         //подписываем фрагмент на изменения ошибки
-        viewModel?.getError()?.observe(this.viewLifecycleOwner, Observer {
+        viewModel?.getError()?.observe(this.viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(this.context, it, Toast.LENGTH_LONG).show()
             }
@@ -65,7 +60,6 @@ class WeatherTownFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
     }
 
     companion object {

@@ -1,7 +1,6 @@
 package online.tatarintsev.weather.model.data
 
 import io.reactivex.Observable
-import online.tatarintsev.weather.model.entities.TownEntity
 import online.tatarintsev.weather.model.entities.WeatherEntity
 import online.tatarintsev.weather.model.network.JsonPlaceHolderApi
 
@@ -11,7 +10,7 @@ class WeatherRemoteDataSource(private val jsonPlaceHolderApi: JsonPlaceHolderApi
 
         return jsonPlaceHolderApi.getJsonplaceholderApiService().getWeather().
             map{ apiWeather ->
-                var weather = WeatherEntity(
+                val weather = WeatherEntity(
                         apiWeather.now,
                         apiWeather.now_dt,
                         apiWeather.info,

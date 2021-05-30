@@ -2,7 +2,6 @@ package online.tatarintsev.weather.model.data
 
 import io.reactivex.Observable
 import online.tatarintsev.weather.model.entities.TownEntity
-import online.tatarintsev.weather.model.entities.WeatherEntity
 import online.tatarintsev.weather.model.network.JsonPlaceHolderApi
 
 class TownsListRemoteDataSource(private val jsonPlaceHolderApi: JsonPlaceHolderApi): TownsListDataSource {

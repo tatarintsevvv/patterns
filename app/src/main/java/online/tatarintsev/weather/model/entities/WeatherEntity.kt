@@ -1,7 +1,6 @@
 package online.tatarintsev.weather.model.entities
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import online.tatarintsev.weather.model.data.models.ApiFact
 import online.tatarintsev.weather.model.data.models.ApiForecast

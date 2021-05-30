@@ -9,9 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,11 +34,10 @@ class WeatherListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     //private var param1: String? = null
     //private var param2: String? = null
-    var listViewModel: WeatherListViewModel? = null
-    private var viewBinding: TownsListFragmentBinding? = null
+    private var listViewModel: WeatherListViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var townsListViewModelFactory: TownsListViewModelFactory = TownsListViewModelFactory()
+        val townsListViewModelFactory = TownsListViewModelFactory()
         listViewModel = ViewModelProvider(this, townsListViewModelFactory).get(WeatherListViewModel::class.java)
         super.onCreate(savedInstanceState)
         /*
@@ -57,11 +54,11 @@ class WeatherListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        var viewBinding: TownsListFragmentBinding =  DataBindingUtil.inflate(inflater, R.layout.towns_list_fragment, container, false)
+        val viewBinding: TownsListFragmentBinding =  DataBindingUtil.inflate(inflater, R.layout.towns_list_fragment, container, false)
         viewBinding.ce = listViewModel
-        viewBinding.setLifecycleOwner(this)
+        viewBinding.lifecycleOwner = this
 
         viewBinding.listTowns.layoutManager = LinearLayoutManager(this.context)
         val adapter = RecyclerViewAdapter(listViewModel?.getTowns()?.value)
@@ -72,14 +69,14 @@ class WeatherListFragment : Fragment() {
         }
 
         //подписываем адаптер на изменения списка
-        listViewModel?.getTowns()?.observe(this.viewLifecycleOwner, Observer {
+        listViewModel?.getTowns()?.observe(this.viewLifecycleOwner, {
             it?.let {
                 adapter.refreshTowns(it)
             }
         })
 
         //подписываем фрагмент на изменения ошибки
-        listViewModel?.getError()?.observe(this.viewLifecycleOwner, Observer {
+        listViewModel?.getError()?.observe(this.viewLifecycleOwner, {
             it?.let {
                 Toast.makeText(this.context, it, Toast.LENGTH_LONG).show()
             }
@@ -116,7 +113,7 @@ class WeatherListFragment : Fragment() {
     }
 
 }
-class RecyclerViewAdapter(var items : ArrayList<TownEntity>?) : RecyclerView.Adapter<ViewHolder>() {
+class RecyclerViewAdapter(private var items : ArrayList<TownEntity>?) : RecyclerView.Adapter<ViewHolder>() {
 
     // Gets the number of countries in the list
     override fun getItemCount(): Int {
@@ -130,13 +127,13 @@ class RecyclerViewAdapter(var items : ArrayList<TownEntity>?) : RecyclerView.Ada
 
     // Binds each country in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.town_name.setText(items?.get(position)?.name)
-        holder?.town_name.setOnClickListener { view ->
+        holder.townName.text = items?.get(position)?.name
+        holder.townName.setOnClickListener { view ->
             val town: String? = items?.get(position)?.name
             val lon: Float? = items?.get(position)?.lon
             val lat: Float? = items?.get(position)?.lat
             if(town != null && lat != null && lon != null) {
-                val townEntity: TownEntity = TownEntity(town, lat, lon)
+                val townEntity = TownEntity(town, lat, lon)
                 val bundle = bundleOf("townEntity" to townEntity)
                 view?.findNavController()?.navigate(R.id.action_weatherListFragment_to_weatherTownFragment2, bundle)
             } else {
@@ -153,5 +150,5 @@ class RecyclerViewAdapter(var items : ArrayList<TownEntity>?) : RecyclerView.Ada
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     // Holds the TextView that will add each country to
-    val town_name: TextView = view.findViewById(R.id.town_name) as TextView
+    val townName: TextView = view.findViewById(R.id.town_name) as TextView
 }

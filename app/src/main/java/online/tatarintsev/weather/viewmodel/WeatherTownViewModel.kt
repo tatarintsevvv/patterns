@@ -43,12 +43,12 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
      * ViewModel сохранится при пересоздании активити и данные не нужно будет запрашивать вновь
      */
     fun onStart() {
-        if (weatherLiveData.getValue() == null) {
+        if (weatherLiveData.value == null) {
             // получаем данные из модели аналогично MVP
             modelTown.getWeather()
                 .subscribeOn(subscribeOn)
                 .observeOn(observeOn)
-                .subscribe(TownWeatherObserver());
+                .subscribe(TownWeatherObserver())
         }
     }
 
@@ -59,7 +59,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
         modelTown.getWeather()
             .subscribeOn(subscribeOn)
             .observeOn(observeOn)
-            .subscribe(TownWeatherObserver());
+            .subscribe(TownWeatherObserver())
     }
 
     /**
@@ -79,7 +79,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
      * Если пользователь свернул приложение или перевернул экран - активити будет пересоздано,
      * ViewModel сохранится, а этот метод не вызовется
      */
-    protected override fun onCleared() {
+    override fun onCleared() {
         if (disposable != null) {
             disposable!!.dispose()
         }
@@ -88,7 +88,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
     }
 
     fun onUserAction() {
-        resultLiveData.setValue("Result")
+        resultLiveData.value = "Result"
     }
 
     fun getWeather(): MutableLiveData<WeatherEntity> {
@@ -111,12 +111,12 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
 
         override fun onNext(weather: WeatherEntity) {
             // полученные данные передаем в обозреваемое поле, которое уведомит подписчиков
-            weatherLiveData.setValue(weather)
+            weatherLiveData.value = weather
         }
 
         override fun onError(e: Throwable) {
             // ошибку тоже передаем в обозреваемое поле
-            errorLiveData.setValue("Error!:" + e.message)
+            errorLiveData.value = "Error!:" + e.message
         }
 
         override fun onComplete() {

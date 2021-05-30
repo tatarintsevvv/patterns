@@ -1,8 +1,6 @@
-package online.tatarintsev.weather.model.data.models
+package online.tatarintsev.weather.model.data
 
 import io.reactivex.Observable
-import online.tatarintsev.weather.model.data.WeatherDataSource
-import online.tatarintsev.weather.model.data.WeatherRemoteDataSource
 import online.tatarintsev.weather.model.entities.WeatherEntity
 import online.tatarintsev.weather.model.network.JsonPlaceHolderApi
 import online.tatarintsev.weather.model.repositories.TownWeatherRepository
@@ -13,8 +11,7 @@ class TownWeatherRepositoryImpl(jsonPlaceHolderApi: JsonPlaceHolderApi): TownWea
     override fun getWeather(): Observable<WeatherEntity> {
         return remoteDataSource.getWeather()
             .map { weather ->
-                val get = weather
-                get
+                weather
             }
     }
 

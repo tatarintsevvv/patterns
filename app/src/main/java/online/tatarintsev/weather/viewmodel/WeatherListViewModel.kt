@@ -8,15 +8,14 @@ import io.reactivex.Observer
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import online.tatarintsev.weather.model.entities.TownEntity
-import online.tatarintsev.weather.model.interactors.TownWeatherModel
 import online.tatarintsev.weather.model.interactors.TownsListModel
 
-public class WeatherListViewModel(private val subscribeOn: Scheduler, private val observeOn: Scheduler, private val modelTown: TownsListModel): ViewModel() {
-    val SAVE_WEATHER_DATA: String = "weather_data"
-    val SAVE_LIST_CHOSEN: String = "list_chosen"
+class WeatherListViewModel(private val subscribeOn: Scheduler, private val observeOn: Scheduler, private val modelTown: TownsListModel): ViewModel() {
+    private val SAVE_WEATHER_DATA: String = "weather_data"
+    private val SAVE_LIST_CHOSEN: String = "list_chosen"
 
-    val RUSSIAN_LIST_CHOSEN: Int = 0
-    val FOREIGN_LIST_CHOSEN: Int = 1
+    private val RUSSIAN_LIST_CHOSEN: Int = 0
+    private val FOREIGN_LIST_CHOSEN: Int = 1
 
     private var disposable: Disposable? = null
 
@@ -37,7 +36,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
         TownEntity("Новосибирск", 49.0f, 49.0f),
         TownEntity("Красноярск", 49.0f, 49.0f),
         TownEntity("Нижний Новгород", 49.0f, 49.0f),
-        TownEntity("Сочи", 49.0f, 49.0f),
+        TownEntity("Сочи", 49.0f, 49.0f)
     )
 
     private val notOurTowns: ArrayList<TownEntity> = arrayListOf(
@@ -48,7 +47,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
         TownEntity("Dehli", 49.0f, 49.0f),
         TownEntity("Paris", 49.0f, 49.0f),
         TownEntity("Rio-de-Janeiro", 49.0f, 49.0f),
-        TownEntity("London", 49.0f, 49.0f),
+        TownEntity("London", 49.0f, 49.0f)
     )
 
 
@@ -77,12 +76,12 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
      * ViewModel сохранится при пересоздании активити и данные не нужно будет запрашивать вновь
      */
     fun onStart() {
-        if (townsLiveData.getValue() == null) {
+        if (townsLiveData.value == null) {
             // получаем данные из модели аналогично MVP
             modelTown.getTowns()
                     .subscribeOn(subscribeOn)
                     .observeOn(observeOn)
-                    .subscribe(ListTownObserver());
+                    .subscribe(ListTownObserver())
         }
     }
 
@@ -91,10 +90,10 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
      */
     fun revertList() {
         if(listChosen == RUSSIAN_LIST_CHOSEN) {
-            listChosen = FOREIGN_LIST_CHOSEN;
+            listChosen = FOREIGN_LIST_CHOSEN
             townsLiveData.setValue(notOurTowns)
         } else {
-            listChosen = RUSSIAN_LIST_CHOSEN;
+            listChosen = RUSSIAN_LIST_CHOSEN
             townsLiveData.setValue(ourTowns)
         }
     }
@@ -107,7 +106,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
         modelTown.getTowns()
                 .subscribeOn(subscribeOn)
                 .observeOn(observeOn)
-                .subscribe(ListTownObserver());
+                .subscribe(ListTownObserver())
     }
 
 
@@ -119,7 +118,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
      * Если пользователь свернул приложение или перевернул экран - активити будет пересоздано,
      * ViewModel сохранится, а этот метод не вызовется
      */
-    protected override fun onCleared() {
+    override fun onCleared() {
         if (disposable != null) {
             disposable!!.dispose()
         }
@@ -128,7 +127,7 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
     }
 
     fun onUserAction() {
-        resultLiveData.setValue("Result")
+        resultLiveData.value = "Result"
     }
 
     fun getTowns(): MutableLiveData<ArrayList<TownEntity>>  {
@@ -151,12 +150,12 @@ public class WeatherListViewModel(private val subscribeOn: Scheduler, private va
 
         override fun onNext(towns: ArrayList<TownEntity>) {
             // полученные данные передаем в обозреваемое поле, которое уведомит подписчиков
-            townsLiveData.setValue(towns)
+            townsLiveData.value = towns
         }
 
         override fun onError(e: Throwable) {
             // ошибку тоже передаем в обозреваемое поле
-            errorLiveData.setValue("Error!:" + e.message)
+            errorLiveData.value = "Error!:" + e.message
         }
 
         override fun onComplete() {

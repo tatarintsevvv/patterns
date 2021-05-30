@@ -9,14 +9,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class JsonPlaceHolderApi {
-    public fun getJsonplaceholderApiService(): JsonPlaceHolderApiService {
-        var gson: Gson = GsonBuilder().create()
+    fun getJsonplaceholderApiService(): JsonPlaceHolderApiService {
+        val gson: Gson = GsonBuilder().create()
 
-        var interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor()
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
-        var retrofit: Retrofit = Retrofit.Builder()
+        val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.weather.yandex.ru/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
