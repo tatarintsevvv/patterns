@@ -8,8 +8,8 @@ import online.tatarintsev.weather.model.repositories.TownWeatherRepository
 class TownWeatherRepositoryImpl(jsonPlaceHolderApi: JsonPlaceHolderApi): TownWeatherRepository {
     private val remoteDataSource: WeatherDataSource = WeatherRemoteDataSource(jsonPlaceHolderApi)
 
-    override fun getWeather(): Observable<WeatherEntity> {
-        return remoteDataSource.getWeather()
+    override fun getWeather(lat: Float, lon: Float): Observable<WeatherEntity> {
+        return remoteDataSource.getWeather(lat, lon)
             .map { weather ->
                 weather
             }

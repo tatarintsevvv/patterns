@@ -7,12 +7,13 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.Observer
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
+import online.tatarintsev.weather.model.entities.TownEntity
 import online.tatarintsev.weather.model.entities.WeatherEntity
 import online.tatarintsev.weather.model.interactors.TownWeatherModel
 
 class WeatherTownViewModel(private val subscribeOn: Scheduler, private val observeOn: Scheduler, private val modelTown: TownWeatherModel): ViewModel() {
-    val SAVE_WEATHER_DATA: String = "weather_town_data"
-    val SAVE_WEATHER_CHOSEN: String = "weather_town_chosen"
+    private val SAVE_WEATHER_DATA: String = "weather_town_data"
+    private val SAVE_WEATHER_CHOSEN: String = "weather_town_chosen"
 
     private var disposable: Disposable? = null
 
@@ -21,21 +22,21 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
     private var errorLiveData: MutableLiveData<String> = MutableLiveData<String>()
     private var resultLiveData: MutableLiveData<String> = MutableLiveData<String>()
 
-    // идентификатор валюты на случай пересоздания процесса
+    // информация о городе на случай пересоздания процесса
     // сохраняется с помощью стандартного механизма Bundle - savedInstanceState
-    public var townChosen: String? = null
+    var townChosen: TownEntity? = null
 
     /**
      * Используется для восстановления идентификатора из savedInstanceState
      */
     fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            townChosen = savedInstanceState.getString(SAVE_WEATHER_CHOSEN)
+            townChosen = savedInstanceState.getParcelable(SAVE_WEATHER_CHOSEN)
         }
     }
 
     fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(SAVE_WEATHER_CHOSEN, townChosen)
+        outState.putParcelable(SAVE_WEATHER_CHOSEN, townChosen)
     }
 
     /**
@@ -45,7 +46,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
     fun onStart() {
         if (weatherLiveData.value == null) {
             // получаем данные из модели аналогично MVP
-            modelTown.getWeather()
+            modelTown.getWeather(townChosen?.lat!!, townChosen?.lon!!)
                 .subscribeOn(subscribeOn)
                 .observeOn(observeOn)
                 .subscribe(TownWeatherObserver())
@@ -56,7 +57,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
      * перегружам данные
      */
     fun reload() {
-        modelTown.getWeather()
+        modelTown.getWeather(townChosen?.lat!!, townChosen?.lon!!)
             .subscribeOn(subscribeOn)
             .observeOn(observeOn)
             .subscribe(TownWeatherObserver())

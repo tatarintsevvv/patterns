@@ -34,7 +34,7 @@ class WeatherTownFragment : Fragment() {
         }
 
         viewModel?.onCreate(savedInstanceState)
-        viewModel?.townChosen = townEntity?.name
+        viewModel?.townChosen = townEntity
         viewModel?.onStart()
 
 

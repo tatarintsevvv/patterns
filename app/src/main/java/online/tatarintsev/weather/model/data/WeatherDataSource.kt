@@ -4,5 +4,5 @@ import io.reactivex.Observable
 import online.tatarintsev.weather.model.entities.WeatherEntity
 
 interface WeatherDataSource {
-    fun getWeather(): Observable<WeatherEntity>
+    fun getWeather(lat: Float, lon: Float): Observable<WeatherEntity>
 }
