@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ApiForecast(
+data class ApiForecasts(
     @SerializedName("date") val date: String
 ): Parcelable

@@ -15,7 +15,7 @@ class WeatherRemoteDataSource(private val jsonPlaceHolderApi: JsonPlaceHolderApi
                         apiWeather.now_dt,
                         apiWeather.info,
                         apiWeather.fact,
-                        apiWeather.forecast
+                        apiWeather.forecasts
                 )
                 weather
             }
