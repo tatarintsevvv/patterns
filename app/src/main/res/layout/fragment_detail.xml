@@ -8,7 +8,7 @@
         name="tv"
         type="online.tatarintsev.weather.viewmodel.WeatherTownViewModel" />
 </data>
-<androidx.appcompat.widget.LinearLayoutCompat
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -32,7 +32,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:onClick="@{() -> tv.reload()}"
             />
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/town_name_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Город"
+        android:textSize="14sp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintTop_toBottomOf="@id/refresh_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fact_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{Integer.toString(tv.weather.fact.temp)}"
+        android:textSize="14sp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintTop_toBottomOf="@id/town_name_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/temp_water"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{Integer.toString(tv.weather.fact.temp_water)}"
+        android:textSize="14sp"
+        android:layout_marginTop="10sp"
+        app:layout_constraintTop_toBottomOf="@id/fact_temp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
