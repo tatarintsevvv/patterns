@@ -23,7 +23,7 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
 
     // идентификатор валюты на случай пересоздания процесса
     // сохраняется с помощью стандартного механизма Bundle - savedInstanceState
-    private var townChosen: String? = null
+    public var townChosen: String? = null
 
     /**
      * Используется для восстановления идентификатора из savedInstanceState
@@ -62,15 +62,6 @@ class WeatherTownViewModel(private val subscribeOn: Scheduler, private val obser
             .subscribe(TownWeatherObserver())
     }
 
-    /**
-     * генерация идентификатора пользователя для наглядной демонстрации сохрания данных
-     */
-    private fun getTownName(): String? {
-        if (modelTown != null) {
-            townChosen = modelTown.getTownName()
-        }
-        return townChosen
-    }
 
     /**
      * Единственный метод жизненного цикла ViewModel

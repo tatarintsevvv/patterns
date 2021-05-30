@@ -16,7 +16,7 @@ import online.tatarintsev.weather.viewmodel.WeatherTownViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM_TOWN_ENTITY = "param1"
+private const val ARG_PARAM_TOWN_ENTITY = "townEntity"
 
 class WeatherTownFragment : Fragment() {
 
@@ -33,8 +33,9 @@ class WeatherTownFragment : Fragment() {
             townEntity = it.getParcelable(ARG_PARAM_TOWN_ENTITY)
         }
 
-        viewModel!!.onCreate(savedInstanceState)
-        viewModel!!.onStart()
+        viewModel?.onCreate(savedInstanceState)
+        viewModel?.townChosen = townEntity?.name
+        viewModel?.onStart()
 
 
     }
