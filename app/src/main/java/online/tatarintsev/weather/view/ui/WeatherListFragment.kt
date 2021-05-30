@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -130,7 +132,16 @@ class RecyclerViewAdapter(var items : ArrayList<TownEntity>?) : RecyclerView.Ada
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder?.town_name.setText(items?.get(position)?.name)
         holder?.town_name.setOnClickListener { view ->
-            view?.findNavController()?.navigate(R.id.action_weatherListFragment_to_weatherTownFragment2)
+            val town: String? = items?.get(position)?.name
+            val lon: Float? = items?.get(position)?.lon
+            val lat: Float? = items?.get(position)?.lat
+            if(town != null && lat != null && lon != null) {
+                val townEntity: TownEntity = TownEntity(town, lat, lon)
+                val bundle = bundleOf("townEntity" to townEntity)
+                view?.findNavController()?.navigate(R.id.action_weatherListFragment_to_weatherTownFragment2, bundle)
+            } else {
+                Toast.makeText(view.context, "Некорректное название города и координаты", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

@@ -12,14 +12,38 @@ import androidx.lifecycle.Observer
 import online.tatarintsev.weather.R
 import online.tatarintsev.weather.databinding.FragmentDetailBinding
 import online.tatarintsev.weather.databinding.TownsListFragmentBinding
+import online.tatarintsev.weather.model.entities.TownEntity
+import online.tatarintsev.weather.view.TownViewModelFactory
+import online.tatarintsev.weather.view.TownsListViewModelFactory
 import online.tatarintsev.weather.viewmodel.WeatherListViewModel
 import online.tatarintsev.weather.viewmodel.WeatherTownViewModel
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM_TOWN_ENTITY = "param1"
+
 class WeatherTownFragment : Fragment() {
 
+    private var townEntity: TownEntity? = null
 
     private var viewModel: WeatherTownViewModel? = null
     private var viewBinding: FragmentDetailBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        var townViewModelFactory: TownViewModelFactory = TownViewModelFactory()
+        viewModel = ViewModelProvider(this, townViewModelFactory).get(WeatherTownViewModel::class.java)
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            townEntity = it.getParcelable(ARG_PARAM_TOWN_ENTITY)
+        }
+
+        viewModel!!.onCreate(savedInstanceState)
+        viewModel!!.onStart()
+
+
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,15 +77,11 @@ class WeatherTownFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(townEntity: TownEntity) =
             WeatherTownFragment().apply {
-                /*
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelable(ARG_PARAM_TOWN_ENTITY, townEntity)
                 }
-
-                 */
             }
     }
 }

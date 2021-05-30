@@ -12,10 +12,16 @@
         android:label="WeatherListFragment" >
         <action
             android:id="@+id/action_weatherListFragment_to_weatherTownFragment2"
-            app:destination="@id/weatherTownFragment2" />
+            app:destination="@id/weatherTownFragment2">
+        </action>
     </fragment>
     <fragment
         android:id="@+id/weatherTownFragment2"
         android:name="online.tatarintsev.weather.view.ui.WeatherTownFragment"
-        android:label="WeatherTownFragment" />
+        android:label="WeatherTownFragment"
+        >
+        <argument
+            android:name="town"
+            app:argType="string" />
+    </fragment>
 </navigation>
