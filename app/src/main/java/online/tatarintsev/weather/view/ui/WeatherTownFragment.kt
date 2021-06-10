@@ -1,5 +1,6 @@
 package online.tatarintsev.weather.view.ui
 
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 import online.tatarintsev.weather.R
 import online.tatarintsev.weather.databinding.FragmentDetailBinding
 import online.tatarintsev.weather.model.entities.TownEntity
@@ -55,6 +57,17 @@ class WeatherTownFragment : Fragment() {
                 Toast.makeText(this.context, it, Toast.LENGTH_LONG).show()
             }
         })
+
+        viewModel?.getWeather()?.observe(this.viewLifecycleOwner) {
+            it?.fact?.icon?.let {
+                GlideToVectorYou.justLoadImage(
+                    activity,
+                    Uri.parse("https://yastatic.net/weather/i/icons/blueye/color/svg/${it}.svg"),
+                    viewBinding.townWeatherIcon
+                )
+
+            }
+        }
 
         return viewBinding.root
     }

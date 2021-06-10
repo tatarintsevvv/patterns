@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_padding="8sp"
-            android:textSize="15sp"
+            android:padding="8sp"
+            android:textSize="26sp"
             />
 </layout>
