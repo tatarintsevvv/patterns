@@ -73,10 +73,8 @@ class PictureOfDayFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
 //        DataBindingUtil.inflate(inflater, R.layout.fragment_picture_of_day, container, false)
-        val view: View = binding.root
-//        return inflater.inflate(R.layout.fragment_picture_of_day, container, false)
-        binding = FragmentPictureOfDayBinding.inflate(layoutInflater)
-        return view
+//        val view: View = binding.root
+        return inflater.inflate(R.layout.fragment_picture_of_day, container, false)
     }
 
     // пока не понля, почему не в onCreateView
@@ -84,6 +82,7 @@ class PictureOfDayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding = FragmentPictureOfDayBinding.bind(view)
         viewModel?.states
             ?.onEach { state -> handleState(state) }
             ?.launchIn(lifecycleScope)
@@ -93,7 +92,7 @@ class PictureOfDayFragment : Fragment() {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${binding.searchText.text.toString()}")
             })
         }
-
+/*
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
 
         bottomSheetBehavior.addBottomSheetCallback(object :
@@ -113,6 +112,7 @@ class PictureOfDayFragment : Fragment() {
                 TODO("not implemented")
             }
         })
+ */
     }
 
     private fun handleState(state: PictureOfDayViewModel.State) {
@@ -164,9 +164,10 @@ class PictureOfDayFragment : Fragment() {
                  */
             }
     }
-
+/*
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
+*/
 }
