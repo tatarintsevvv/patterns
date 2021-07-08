@@ -44,12 +44,7 @@ class PictureOfDayFragment : Fragment() {
     private lateinit var binding: FragmentPictureOfDayBinding
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-/*
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PictureOfDayViewModel::class.java)
-    }
-*/
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val pictureViewModelFactory = PictureOfDayViewModelFactory()
@@ -92,7 +87,7 @@ class PictureOfDayFragment : Fragment() {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${binding.searchText.text.toString()}")
             })
         }
-/*
+
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
 
         bottomSheetBehavior.addBottomSheetCallback(object :
@@ -112,7 +107,7 @@ class PictureOfDayFragment : Fragment() {
                 TODO("not implemented")
             }
         })
- */
+
     }
 
     private fun handleState(state: PictureOfDayViewModel.State) {
@@ -164,10 +159,10 @@ class PictureOfDayFragment : Fragment() {
                  */
             }
     }
-/*
+
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
-*/
+
 }
