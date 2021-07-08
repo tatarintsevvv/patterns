@@ -1,19 +1,24 @@
 package online.tatarintsev.mvi.view.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import online.tatarintsev.mvi.R
+import online.tatarintsev.mvi.databinding.FragmentPictureOfDayBinding
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel.State.*
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModelFactory
@@ -36,6 +41,9 @@ class PictureOfDayFragment : Fragment() {
 
     private var viewModel: PictureOfDayViewModel? = null
 
+    private lateinit var binding: FragmentPictureOfDayBinding
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 /*
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -62,9 +70,13 @@ class PictureOfDayFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_picture_of_day, container, false)
+//        DataBindingUtil.inflate(inflater, R.layout.fragment_picture_of_day, container, false)
+        val view: View = binding.root
+//        return inflater.inflate(R.layout.fragment_picture_of_day, container, false)
+        binding = FragmentPictureOfDayBinding.inflate(layoutInflater)
+        return view
     }
 
     // пока не понля, почему не в onCreateView
@@ -75,6 +87,12 @@ class PictureOfDayFragment : Fragment() {
         viewModel?.states
             ?.onEach { state -> handleState(state) }
             ?.launchIn(lifecycleScope)
+
+        binding.searchTextLayout.setEndIconOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("https://en.wikipedia.org/wiki/${binding.searchText.text.toString()}")
+            })
+        }
     }
 
     private fun handleState(state: PictureOfDayViewModel.State) {
