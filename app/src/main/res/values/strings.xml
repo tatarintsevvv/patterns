@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">Weaher informator</string>
+    <string name="app_name">Nasa informator</string>
     <string name="info_text">Данные недоступны</string>
     <string name="refresh_button_text">Обновить</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="photo_of_day_description">Фото дня</string>
 </resources>

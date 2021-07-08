@@ -1,4 +1,4 @@
-package online.tatarintsev.weather
+package online.tatarintsev.mvi
 
 import org.junit.Test
 
