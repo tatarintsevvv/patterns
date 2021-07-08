@@ -95,6 +95,24 @@ class PictureOfDayFragment : Fragment() {
         }
 
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
+
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_DRAGGING -> TODO("not implemented")
+                    BottomSheetBehavior.STATE_COLLAPSED -> TODO("not implemented")
+                    BottomSheetBehavior.STATE_EXPANDED -> TODO("not implemented")
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> TODO("not implemented")
+                    BottomSheetBehavior.STATE_HIDDEN -> TODO("not implemented")
+                    BottomSheetBehavior.STATE_SETTLING -> TODO("not implemented")
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                TODO("not implemented")
+            }
+        })
     }
 
     private fun handleState(state: PictureOfDayViewModel.State) {
