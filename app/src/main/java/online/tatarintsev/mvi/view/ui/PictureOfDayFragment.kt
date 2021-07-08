@@ -93,6 +93,8 @@ class PictureOfDayFragment : Fragment() {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${binding.searchText.text.toString()}")
             })
         }
+
+        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
     }
 
     private fun handleState(state: PictureOfDayViewModel.State) {
@@ -143,5 +145,10 @@ class PictureOfDayFragment : Fragment() {
                 }
                  */
             }
+    }
+
+    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 }

@@ -114,4 +114,6 @@ class PictureOfDayViewModel (
         viewModelJob.cancel()
         super.onCleared()
     }
+
+
 }
