@@ -17,15 +17,12 @@ class PictureOfDayViewModel (
 
     private val retrofitImpl: PODRetrofitImpl = PODRetrofitImpl()
 
+    // для корутинов
     private var disposable: Disposable? = null
 
-    // для корутинов
     private val viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-
-
 
     sealed class Intent {
         object Search : Intent()
@@ -33,8 +30,8 @@ class PictureOfDayViewModel (
 
     sealed class State {
         class Success(val serverResponseData: PODServerResponseData) : State()
-        class Error(val error: Throwable) : State()
         class Loading(val progress: Int?) : State()
+        class Error(val error: Throwable) : State()
     }
 
     override suspend fun handleIntent(intent: Intent) = when (intent) {
@@ -44,19 +41,16 @@ class PictureOfDayViewModel (
 
     fun onStart() {
         viewModelScope.launch(Dispatchers.IO) {
-        setState { State.Loading(1)}
+            setState { State.Loading(1)}
             sendServerRequest()
         }
 
     }
 
     private suspend fun sendServerRequest() {
-//        liveDataForViewToObserve.value = PictureOfTheDayData.Loading(null)
         val apiKey: String = BuildConfig.NASA_API_KEY
         if (apiKey.isBlank()) {
-
             setState { State.Error(Throwable("You need API key")) }
-//            PictureOfTheDayData.Error(Throwable("You need API key"))
         } else {
             retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey).enqueue(object :
                 Callback<PODServerResponseData> {
@@ -68,21 +62,14 @@ class PictureOfDayViewModel (
                         viewModelScope.launch(Dispatchers.IO) {
                             setState { State.Success(response.body() as PODServerResponseData) }
                         }
-//                        liveDataForViewToObserve.value =
-//                            PictureOfTheDayData.Success(response.body()!!)
                     } else {
                         val message = response.message()
                         viewModelScope.launch(Dispatchers.IO) {
-                        if (message.isNullOrEmpty()) {
-                                 setState { State.Error(Throwable("Unidentified error")) }
-
-//                            liveDataForViewToObserve.value =
-//                                PictureOfTheDayData.Error(Throwable("Unidentified error"))
-                        } else {
-                            State.Error(Throwable(message))
-//                            liveDataForViewToObserve.value =
-//                                PictureOfTheDayData.Error(Throwable(message))
-                        }
+                            if (message.isNullOrEmpty()) {
+                                setState { State.Error(Throwable("Unidentified error")) }
+                            } else {
+                                setState { State.Error(Throwable(message)) }
+                            }
                         }
                     }
                 }
@@ -91,22 +78,11 @@ class PictureOfDayViewModel (
                     viewModelScope.launch(Dispatchers.IO) {
                         setState { State.Error(t) }
                     }
-//                    liveDataForViewToObserve.value = PictureOfTheDayData.Error(t)
                 }
             })
         }
-
-
     }
 
-
-    /**
-     * Единственный метод жизненного цикла ViewModel
-     * Вызывается, когда пользователь явно покидает активити и ViewModel больше не будет хранится
-     * явно покидание активити - кнопка "назад"
-     * Если пользователь свернул приложение или перевернул экран - активити будет пересоздано,
-     * ViewModel сохранится, а этот метод не вызовется
-     */
     override fun onCleared() {
         if (disposable != null) {
             disposable!!.dispose()
@@ -114,6 +90,5 @@ class PictureOfDayViewModel (
         viewModelJob.cancel()
         super.onCleared()
     }
-
 
 }

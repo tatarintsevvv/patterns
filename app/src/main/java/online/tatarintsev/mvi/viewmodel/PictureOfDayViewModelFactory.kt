@@ -7,11 +7,7 @@ class PictureOfDayViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
         return PictureOfDayViewModel(
-            /*
-            Schedulers.io(),
-            AndroidSchedulers.mainThread(),
-            currencyModel
-             */
+
         ) as T
 
     }

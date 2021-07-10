@@ -13,12 +13,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import online.tatarintsev.mvi.R
-import online.tatarintsev.mvi.databinding.FragmentPictureOfDayBinding
+
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel.State.*
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModelFactory
@@ -35,13 +37,8 @@ private const val ARG_PARAM2 = "param2"
  */
 @ExperimentalCoroutinesApi
 class PictureOfDayFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
 
     private var viewModel: PictureOfDayViewModel? = null
-
-    private lateinit var binding: FragmentPictureOfDayBinding
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -51,13 +48,6 @@ class PictureOfDayFragment : Fragment() {
         viewModel = ViewModelProvider(this, pictureViewModelFactory).get(PictureOfDayViewModel::class.java)
 
         super.onCreate(savedInstanceState)
-        /*
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-         */
-//        viewModel?.onCreate(savedInstanceState)
         viewModel?.onStart()
 
     }
@@ -67,8 +57,6 @@ class PictureOfDayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-//        DataBindingUtil.inflate(inflater, R.layout.fragment_picture_of_day, container, false)
-//        val view: View = binding.root
         return inflater.inflate(R.layout.fragment_picture_of_day, container, false)
     }
 
@@ -77,17 +65,12 @@ class PictureOfDayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentPictureOfDayBinding.bind(view)
-        viewModel?.states
-            ?.onEach { state -> handleState(state) }
-            ?.launchIn(lifecycleScope)
-
-        binding.searchTextLayout.setEndIconOnClickListener {
+        (view.findViewById(R.id.search_text_layout) as TextInputLayout).setEndIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://en.wikipedia.org/wiki/${binding.searchText.text.toString()}")
+                data = Uri.parse("https://en.wikipedia.org/wiki/${(view.findViewById(R.id.search_text) as TextInputEditText).text.toString()}")
             })
         }
-
+/*
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
 
         bottomSheetBehavior.addBottomSheetCallback(object :
@@ -107,13 +90,23 @@ class PictureOfDayFragment : Fragment() {
                 TODO("not implemented")
             }
         })
+*/
+
+
+
+        viewModel?.states
+            ?.onEach { state -> handleState(state) }
+            ?.launchIn(lifecycleScope)
+
 
     }
 
     private fun handleState(state: PictureOfDayViewModel.State) {
         when(state) {
             is Error -> {            }
-            is Loading -> {}
+            is Loading -> {
+
+            }
             is Success -> {
                 val serverResponseData = state.serverResponseData
                 val url = serverResponseData.url
@@ -151,12 +144,6 @@ class PictureOfDayFragment : Fragment() {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             PictureOfDayFragment().apply {
-                /*
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-                 */
             }
     }
 
