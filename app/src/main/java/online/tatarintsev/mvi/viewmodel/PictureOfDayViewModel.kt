@@ -41,7 +41,6 @@ class PictureOfDayViewModel (
 
     fun onStart() {
         viewModelScope.launch(Dispatchers.IO) {
-            setState { State.Loading(1)}
             sendServerRequest()
         }
 
@@ -49,6 +48,7 @@ class PictureOfDayViewModel (
 
     private suspend fun sendServerRequest() {
         val apiKey: String = BuildConfig.NASA_API_KEY
+        setState { State.Loading(1)}
         if (apiKey.isBlank()) {
             setState { State.Error(Throwable("You need API key")) }
         } else {

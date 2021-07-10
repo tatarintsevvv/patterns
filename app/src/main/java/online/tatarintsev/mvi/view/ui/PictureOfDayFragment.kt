@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,6 +22,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import online.tatarintsev.mvi.R
+import online.tatarintsev.mvi.databinding.FragmentPictureOfDayBinding
 
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel.State.*
@@ -42,6 +45,7 @@ class PictureOfDayFragment : Fragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
+    private var binding: FragmentPictureOfDayBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val pictureViewModelFactory = PictureOfDayViewModelFactory()
@@ -65,9 +69,13 @@ class PictureOfDayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (view.findViewById(R.id.search_text_layout) as TextInputLayout).setEndIconOnClickListener {
+        binding = FragmentPictureOfDayBinding.bind(view)
+
+        (binding?.progressIndicator as CircularProgressIndicator).hide()
+
+        (binding?.searchTextLayout as TextInputLayout).setEndIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://en.wikipedia.org/wiki/${(view.findViewById(R.id.search_text) as TextInputEditText).text.toString()}")
+                data = Uri.parse("https://en.wikipedia.org/wiki/${(binding?.searchText as TextInputEditText).text.toString()}")
             })
         }
 /*
@@ -103,11 +111,16 @@ class PictureOfDayFragment : Fragment() {
 
     private fun handleState(state: PictureOfDayViewModel.State) {
         when(state) {
-            is Error -> {            }
-            is Loading -> {
+            is Error -> {
+                (binding?.progressIndicator as CircularProgressIndicator).hide()
+                Snackbar.make(view as View, state.error.localizedMessage.toString(), Snackbar.LENGTH_SHORT).show()
 
             }
+            is Loading -> {
+                (binding?.progressIndicator as CircularProgressIndicator).show()
+            }
             is Success -> {
+                (binding?.progressIndicator as CircularProgressIndicator).hide()
                 val serverResponseData = state.serverResponseData
                 val url = serverResponseData.url
                 if (url.isNullOrEmpty()) {
@@ -152,4 +165,8 @@ class PictureOfDayFragment : Fragment() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
