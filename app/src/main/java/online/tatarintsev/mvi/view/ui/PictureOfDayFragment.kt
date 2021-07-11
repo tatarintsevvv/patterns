@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
@@ -73,34 +74,41 @@ class PictureOfDayFragment : Fragment() {
             })
         }
 
-/*
-        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
+        binding?.bottomSheetLayout?.bottomSheetContainer?.let { setBottomSheetBehavior(it) }
 
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
-                    BottomSheetBehavior.STATE_DRAGGING -> TODO("not implemented")
-                    BottomSheetBehavior.STATE_COLLAPSED -> TODO("not implemented")
-                    BottomSheetBehavior.STATE_EXPANDED -> TODO("not implemented")
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> TODO("not implemented")
-                    BottomSheetBehavior.STATE_HIDDEN -> TODO("not implemented")
-                    BottomSheetBehavior.STATE_SETTLING -> TODO("not implemented")
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+//                        TODO("not implemented")
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+//                        TODO("not implemented")
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+//                        TODO("not implemented")
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+//                        TODO("not implemented")
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+//                        TODO("not implemented")
+                    }
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                TODO("not implemented")
+//                TODO("not implemented")
             }
         })
-*/
-
-
 
         viewModel?.states
             ?.onEach { state -> handleState(state) }
             ?.launchIn(lifecycleScope)
-
 
     }
 
@@ -108,7 +116,7 @@ class PictureOfDayFragment : Fragment() {
         when(state) {
             is Error -> {
                 (binding?.progressIndicator as CircularProgressIndicator).hide()
-                Snackbar.make(view as View, state.error.localizedMessage.toString(), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(view as View, state.error.localizedMessage as String, Snackbar.LENGTH_SHORT).show()
 
             }
             is Loading -> {
@@ -118,6 +126,8 @@ class PictureOfDayFragment : Fragment() {
                 (binding?.progressIndicator as CircularProgressIndicator).hide()
                 val serverResponseData = state.serverResponseData
                 val url = serverResponseData.url
+                val title: String? = serverResponseData.title
+                val explanation: String? = serverResponseData.explanation
                 if (url.isNullOrEmpty()) {
                     Snackbar.make(view as View, "Пустая ссылка", Snackbar.LENGTH_LONG).show()
                 } else {
@@ -126,6 +136,16 @@ class PictureOfDayFragment : Fragment() {
                     imageView?.load(url) {
                         lifecycle(this@PictureOfDayFragment)
                     }
+                    val description: TextView? =  binding?.bottomSheetLayout?.bottomSheetDescription
+                    explanation?.let {
+                        description?.text = it
+                    }
+                    val header: TextView? = binding?.bottomSheetLayout?.bottomSheetDescriptionHeader
+                    title?.let {
+                        header?.text = title
+                    }
+                    bottomSheetBehavior.peekHeight = 300;
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
             }

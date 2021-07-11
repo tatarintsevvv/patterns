@@ -41,7 +41,9 @@
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:contentDescription="@string/photo_of_day_description"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/ic_launcher_background"
+            app:layout_constraintTop_toBottomOf="@id/search_text_layout"
+            />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progress_indicator"
@@ -56,6 +58,10 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/bottom_sheet_layout"
+        layout="@layout/bottom_sheet_layout" />
 
 
     <com.google.android.material.bottomappbar.BottomAppBar
