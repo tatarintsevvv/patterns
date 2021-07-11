@@ -3,11 +3,10 @@ package online.tatarintsev.mvi.view.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -28,10 +27,6 @@ import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel.State.*
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -64,7 +59,6 @@ class PictureOfDayFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_picture_of_day, container, false)
     }
 
-    // пока не понля, почему не в onCreateView
     @FlowPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,6 +72,7 @@ class PictureOfDayFragment : Fragment() {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${(binding?.searchText as TextInputEditText).text.toString()}")
             })
         }
+
 /*
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
 
@@ -124,18 +119,12 @@ class PictureOfDayFragment : Fragment() {
                 val serverResponseData = state.serverResponseData
                 val url = serverResponseData.url
                 if (url.isNullOrEmpty()) {
-                    //Отобразите ошибку
-                    //showError("Сообщение, что ссылка пустая")
+                    Snackbar.make(view as View, "Пустая ссылка", Snackbar.LENGTH_LONG).show()
                 } else {
-                    //Отобразите фото
-                    //showSuccess()
-                    //Coil в работе: достаточно вызвать у нашего ImageView
-                    //нужную extension-функцию и передать ссылку и заглушки для placeholder
-                        val imageView: ImageView?  = this.view?.findViewById(R.id.image_view)
+                    binding?.progressIndicator?.hide()
+                    val imageView: ImageView?  = binding?.imageView
                     imageView?.load(url) {
                         lifecycle(this@PictureOfDayFragment)
-                //                        error(R.drawable.ic_load_error_vector)
-                //                        placeholder(R.drawable.ic_no_photo_vector)
                     }
                 }
 
@@ -145,19 +134,9 @@ class PictureOfDayFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PictureOfDayFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PictureOfDayFragment().apply {
-            }
+         @JvmStatic
+        fun newInstance() =
+            PictureOfDayFragment()
     }
 
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
@@ -169,4 +148,23 @@ class PictureOfDayFragment : Fragment() {
         super.onDestroyView()
         binding = null
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.botom_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.app_bar_fav -> Snackbar.make(view as View, R.string.menu_faivourite, Snackbar.LENGTH_SHORT).show()
+            R.id.app_bar_search -> Snackbar.make(view as View, R.string.menu_setings, Snackbar.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setBottomAppBar(view: View) {
+        (activity as AppCompatActivity).setSupportActionBar(binding?.bottomAppBar)
+        setHasOptionsMenu(true)
+    }
+
 }

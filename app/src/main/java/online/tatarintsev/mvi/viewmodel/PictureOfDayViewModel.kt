@@ -1,6 +1,10 @@
 package online.tatarintsev.mvi.viewmodel
 
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.textfield.TextInputEditText
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
 import online.tatarintsev.mvi.BuildConfig
@@ -25,7 +29,7 @@ class PictureOfDayViewModel (
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     sealed class Intent {
-        object Search : Intent()
+        class SomeAction(val someText: String) : Intent()
     }
 
     sealed class State {
@@ -35,7 +39,9 @@ class PictureOfDayViewModel (
     }
 
     override suspend fun handleIntent(intent: Intent) = when (intent) {
-        is Intent.Search -> TODO("Not implemented yet")
+        is Intent.SomeAction -> {
+
+        }
 
     }
 
