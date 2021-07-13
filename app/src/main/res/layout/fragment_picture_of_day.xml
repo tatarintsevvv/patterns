@@ -71,7 +71,9 @@
         android:layout_gravity="bottom"
         app:backgroundTint="?attr/colorPrimary"
         app:fabAlignmentMode="center"
-        app:navigationIcon="@android:drawable/ic_menu_compass" />
+        app:hideOnScroll="true"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="@drawable/ic_hamburger" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -81,5 +83,6 @@
         app:layout_anchor="@id/bottom_app_bar"
         app:srcCompat="@android:drawable/btn_radio"
         app:tint="#FFFFFF" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

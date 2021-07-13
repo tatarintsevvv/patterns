@@ -9,9 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil.api.load
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import online.tatarintsev.mvi.R
 import online.tatarintsev.mvi.databinding.FragmentPictureOfDayBinding
+import online.tatarintsev.mvi.view.BottomNavigationDrawerFragment
 
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel.State.*
@@ -106,6 +109,8 @@ class PictureOfDayFragment : Fragment() {
             }
         })
 
+        setBottomAppBar(view)
+
         viewModel?.states
             ?.onEach { state -> handleState(state) }
             ?.launchIn(lifecycleScope)
@@ -144,7 +149,7 @@ class PictureOfDayFragment : Fragment() {
                     title?.let {
                         header?.text = title
                     }
-                    bottomSheetBehavior.peekHeight = 300;
+                    bottomSheetBehavior.peekHeight = 300
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
@@ -157,6 +162,7 @@ class PictureOfDayFragment : Fragment() {
          @JvmStatic
         fun newInstance() =
             PictureOfDayFragment()
+        private var isMain = true
     }
 
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
@@ -178,6 +184,11 @@ class PictureOfDayFragment : Fragment() {
         when (item.itemId) {
             R.id.app_bar_fav -> Snackbar.make(view as View, R.string.menu_faivourite, Snackbar.LENGTH_SHORT).show()
             R.id.app_bar_search -> Snackbar.make(view as View, R.string.menu_setings, Snackbar.LENGTH_SHORT).show()
+            android.R.id.home -> {
+                activity?.let {
+                    BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -185,6 +196,22 @@ class PictureOfDayFragment : Fragment() {
     private fun setBottomAppBar(view: View) {
         (activity as AppCompatActivity).setSupportActionBar(binding?.bottomAppBar)
         setHasOptionsMenu(true)
+        binding?.fab?.setOnClickListener {
+            if (isMain) {
+                isMain = false
+                binding?.bottomAppBar?.navigationIcon = null
+                binding?.bottomAppBar?.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+                binding?.fab?.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_hamburger))
+                binding?.bottomAppBar?.replaceMenu(R.menu.menu_bottom_bar_other_screen)
+            } else {
+                isMain = true
+                binding?.bottomAppBar?.navigationIcon =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_hamburger)
+                binding?.bottomAppBar?.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+                binding?.fab?.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_plus_fab))
+                binding?.bottomAppBar?.replaceMenu(R.menu.botom_menu)
+            }
+        }
     }
 
 }
