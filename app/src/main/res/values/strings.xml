@@ -9,4 +9,5 @@
     <string name="menu_faivourite">Предпочтения</string>
     <string name="menu_setings">Настройки</string>
     <string name="search">Поиск</string>
+    <string name="theme_switcher">Ночная тема</string>
 </resources>

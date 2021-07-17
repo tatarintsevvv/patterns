@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.onEach
 import online.tatarintsev.mvi.R
 import online.tatarintsev.mvi.databinding.FragmentPictureOfDayBinding
 import online.tatarintsev.mvi.view.BottomNavigationDrawerFragment
+import online.tatarintsev.mvi.view.MainActivity
 
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel
 import online.tatarintsev.mvi.viewmodel.PictureOfDayViewModel.State.*
@@ -182,6 +184,20 @@ class PictureOfDayFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.app_bar_theme_switch -> {
+                var isSwitchNightMode: Boolean = false
+                var nightMode: Int = (activity as MainActivity).delegate.localNightMode
+                if(nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                    nightMode = AppCompatDelegate.MODE_NIGHT_NO
+                } else {
+                    nightMode = AppCompatDelegate.MODE_NIGHT_YES
+                    isSwitchNightMode = true
+                }
+                activity?.setTheme(nightMode)
+                (activity as MainActivity).saveNightTheme(isSwitchNightMode)
+//                activity?.setTheme(R.style.Theme_MVI_Night)
+                activity?.recreate()
+            }
             R.id.app_bar_fav -> Snackbar.make(view as View, R.string.menu_faivourite, Snackbar.LENGTH_SHORT).show()
             R.id.app_bar_search -> Snackbar.make(view as View, R.string.menu_setings, Snackbar.LENGTH_SHORT).show()
             android.R.id.home -> {
