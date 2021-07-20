@@ -70,13 +70,7 @@ class FirstScreenFragment : Fragment() {
                     val phoneOnlyDigits = phone.filter { symbol -> symbol.isDigit() }
                     if(phoneOnlyDigits.length == 11) {
                         // запрос кода CМС
-                        view?.let {
-                            Navigation.findNavController(it).navigate(
-                                R.id.action_first_screen_to_secondScreenFragment,
-                                bundleOf()
-                            )
-                        }
-//                        viewModel?.send(FirstScreenViewModel.Intent.RequestSMS(phoneOnlyDigits))
+                        viewModel?.send(FirstScreenViewModel.Intent.RequestSMS(phoneOnlyDigits))
                     } else {
                         Snackbar.make(view, "Номер должен содержать 11 цифр", Snackbar.LENGTH_LONG).show()
                     }
@@ -99,7 +93,6 @@ class FirstScreenFragment : Fragment() {
             is Error -> {
                 (binding?.progressIndicator as CircularProgressIndicator).hide()
                 Snackbar.make(view as View, state.error.localizedMessage as String, Snackbar.LENGTH_SHORT).show()
-
             }
             is Loading -> {
                 (binding?.progressIndicator as CircularProgressIndicator).show()

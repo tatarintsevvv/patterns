@@ -5,4 +5,6 @@
     <dimen name="big_button_margin">10dp</dimen>
     <dimen name="oferta_text_hor_padding">30dp</dimen>
     <dimen name="phone_text_hor_margin">31dp</dimen>
+    <dimen name="second_screen_input_margin_left">38dp</dimen>
+    <dimen name="input_digit_dim">40dp</dimen>
 </resources>

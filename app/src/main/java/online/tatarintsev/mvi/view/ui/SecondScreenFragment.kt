@@ -13,6 +13,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
 import androidx.navigation.Navigation
 import online.tatarintsev.mvi.R
+import online.tatarintsev.mvi.databinding.FragmentFirstScreenBinding
+import online.tatarintsev.mvi.databinding.FragmentSecondScreenBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +30,8 @@ class SecondScreenFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private var binding: FragmentSecondScreenBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +51,14 @@ class SecondScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentSecondScreenBinding.bind(view)
+
+        binding?.inputDigi1?.requestFocus()
+
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+        imm.showSoftInput(binding?.inputDigi1, InputMethodManager.SHOW_FORCED)
 
         requireActivity().onBackPressedDispatcher.addCallback {
             val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

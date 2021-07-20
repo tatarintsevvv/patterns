@@ -72,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/phone_7"
+            android:textSize="24sp"
             android:textColor="@color/white"
             android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
