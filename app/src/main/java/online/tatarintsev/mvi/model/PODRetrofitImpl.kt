@@ -9,15 +9,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 class PODRetrofitImpl {
-    private val baseUrl = "https://api.nasa.gov/"
+    private val baseUrl = "https://dev.pulttaxi.ru/"
 
-    fun getRetrofitImpl(): PictureOfTheDayAPI {
+    fun getRetrofitImpl(): FirstScreenAPI {
         val podRetrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(createOkHttpClient(PODInterceptor()))
             .build()
-        return podRetrofit.create(PictureOfTheDayAPI::class.java)
+        return podRetrofit.create(FirstScreenAPI::class.java)
     }
 
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {

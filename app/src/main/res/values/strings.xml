@@ -1,13 +1,8 @@
 <resources>
-    <string name="app_name">Nasa informator</string>
-    <string name="info_text">Данные недоступны</string>
-    <string name="refresh_button_text">Обновить</string>
+    <string name="app_name">Тестовое задание</string>
+    <string name="repeat">Продолжить</string>
+    <string name="oferta_text">Ознакомьтесь с договором-оферты. Регистрируясь или авторизуясь, вы принимаете его условия</string>
+    <string name="phone_7">+7</string>
+    <string name="input_sms_code">Введите код из СМС</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="photo_of_day_description">Фото дня</string>
-    <string name="wiki_search_helper">Поиск в Википедиии</string>
-    <string name="menu_faivourite">Предпочтения</string>
-    <string name="menu_setings">Настройки</string>
-    <string name="search">Поиск</string>
-    <string name="theme_switcher">Ночная тема</string>
 </resources>

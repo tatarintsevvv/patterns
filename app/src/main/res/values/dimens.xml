@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <dimen name="big_button_margin">10dp</dimen>
+    <dimen name="oferta_text_hor_padding">30dp</dimen>
+    <dimen name="phone_text_hor_margin">31dp</dimen>
+</resources>

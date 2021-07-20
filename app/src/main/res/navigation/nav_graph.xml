@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/pictureOfDayFragment">
+    app:startDestination="@id/first_screen">
 
 
     <fragment
-        android:id="@+id/pictureOfDayFragment"
-        android:name="online.tatarintsev.mvi.view.ui.PictureOfDayFragment"
-        android:label="PictureOfDayFragment" />
+        android:id="@+id/first_screen"
+        android:name="online.tatarintsev.mvi.view.ui.FirstScreenFragment"
+        android:label="fragment_first_screen" >
+        <action
+            android:id="@+id/action_first_screen_to_secondScreenFragment"
+            app:destination="@id/second_screen" />
+    </fragment>
+    <fragment
+        android:id="@+id/second_screen"
+        android:name="online.tatarintsev.mvi.view.ui.SecondScreenFragment"
+        android:label="fragment_second_screen"
+        tools:layout="@layout/fragment_second_screen" />
 </navigation>

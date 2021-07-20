@@ -1,12 +1,12 @@
-package online.tatarintsev.mvi.viewmodel
+package online.tatarintsev.mvi.viewmodel.first_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class PictureOfDayViewModelFactory: ViewModelProvider.Factory {
+class FirstScreenViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
-        return PictureOfDayViewModel(
+        return FirstScreenViewModel(
 
         ) as T
 

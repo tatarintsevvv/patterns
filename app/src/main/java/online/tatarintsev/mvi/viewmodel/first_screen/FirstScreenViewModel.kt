@@ -1,19 +1,19 @@
-package online.tatarintsev.mvi.viewmodel
+package online.tatarintsev.mvi.viewmodel.first_screen
 
 import androidx.lifecycle.viewModelScope
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
-import online.tatarintsev.mvi.BuildConfig
 import online.tatarintsev.mvi.model.PODRetrofitImpl
-import online.tatarintsev.mvi.model.PODServerResponseData
+import online.tatarintsev.mvi.model.PODServerResponseSMSStatus
+import online.tatarintsev.mvi.viewmodel.StatefulIntentViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-class PictureOfDayViewModel (
+class FirstScreenViewModel (
     initialState: State = State.Loading(0)
-    ) : StatefulIntentViewModel<PictureOfDayViewModel.Intent, PictureOfDayViewModel.State>(initialState) {
+    ) : StatefulIntentViewModel<FirstScreenViewModel.Intent, FirstScreenViewModel.State>(initialState) {
 
     private val retrofitImpl: PODRetrofitImpl = PODRetrofitImpl()
 
@@ -25,44 +25,42 @@ class PictureOfDayViewModel (
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     sealed class Intent {
-        class SomeAction(val someText: String) : Intent()
+        class RequestSMS(val phone_number: String) : Intent()
     }
 
     sealed class State {
-        class Success(val serverResponseData: PODServerResponseData) : State()
+        class Success(val serverResponseSMSStatus: PODServerResponseSMSStatus) : State()
         class Loading(val progress: Int?) : State()
         class Error(val error: Throwable) : State()
     }
 
     override suspend fun handleIntent(intent: Intent) = when (intent) {
-        is Intent.SomeAction -> {
-
+        is Intent.RequestSMS -> {
+            viewModelScope.launch(Dispatchers.IO) {
+                sendServerRequest(intent.phone_number)
+            }
         }
 
     }
 
     fun onStart() {
-        viewModelScope.launch(Dispatchers.IO) {
-            sendServerRequest()
-        }
 
     }
 
-    private suspend fun sendServerRequest() {
-        val apiKey: String = BuildConfig.NASA_API_KEY
-        setState { State.Loading(1)}
-        if (apiKey.isBlank()) {
-            setState { State.Error(Throwable("You need API key")) }
+    private suspend fun sendServerRequest(phoneNumber: String) {
+        setState { State.Loading(1) }
+        if (phoneNumber.isBlank()) {
+            setState { State.Error(Throwable("Не указан номер телефона")) }
         } else {
-            retrofitImpl.getRetrofitImpl().getPictureOfTheDay(apiKey).enqueue(object :
-                Callback<PODServerResponseData> {
+            retrofitImpl.getRetrofitImpl().getStatusSMS(phoneNumber).enqueue(object :
+                Callback<PODServerResponseSMSStatus> {
                 override fun onResponse(
-                    call: Call<PODServerResponseData>,
-                    response: Response<PODServerResponseData>
+                    call: Call<PODServerResponseSMSStatus>,
+                    response: Response<PODServerResponseSMSStatus>
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         viewModelScope.launch(Dispatchers.IO) {
-                            setState { State.Success(response.body() as PODServerResponseData) }
+                            setState { State.Success(response.body() as PODServerResponseSMSStatus) }
                         }
                     } else {
                         val message = response.message()
@@ -76,19 +74,18 @@ class PictureOfDayViewModel (
                     }
                 }
 
-                override fun onFailure(call: Call<PODServerResponseData>, t: Throwable) {
+                override fun onFailure(call: Call<PODServerResponseSMSStatus>, t: Throwable) {
                     viewModelScope.launch(Dispatchers.IO) {
                         setState { State.Error(t) }
                     }
                 }
             })
         }
+
     }
 
     override fun onCleared() {
-        disposable?.let {
-            it.dispose()
-        }
+        disposable?.dispose()
         viewModelJob.cancel()
         super.onCleared()
     }
